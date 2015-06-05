@@ -1,7 +1,7 @@
-MOLPay Wordpress Plugin
+MOLPay WordPress Plugin
 =====================
 
-MOLPay Plugin for Wordpress develop by MOLPay technical team.
+MOLPay Plugin for Wordpress developed by MOLPay technical team.
 
 Notes
 -----
