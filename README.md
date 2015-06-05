@@ -13,7 +13,7 @@ assistance, please email support@molpay.com
 
 Installations for Wordpress Plugin 
 -----------------------------
-[ClassiPress Version	3.2.x and below](https://github.com/fayra/Wordpress/wiki/Installation-for-Classipress-Plugins)
+[ClassiPress Version	3.2.1](https://github.com/MOLPay/WordPress/wiki/Installation-for-Classipress-Plugins)
 
 Contribution
 ------------
