@@ -15,6 +15,10 @@ Installations for Wordpress Plugin
 -----------------------------
 [ClassiPress Version	3.2.1](https://github.com/MOLPay/WordPress/wiki/Installation-for-Classipress-Plugins)
 
+[WooCommerce Version 2.3.x](https://github.com/MOLPay/WordPress/wiki/Installation-for-WooCommerce-Plugins)
+
+[WP-eCommerce Version 3.9.x](https://github.com/MOLPay/WordPress/wiki/Installation-for-WP-e-Commerce-Plugins)
+
 Contribution
 ------------
 
