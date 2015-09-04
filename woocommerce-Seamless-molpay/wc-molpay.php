@@ -9,7 +9,7 @@
  */
 
 /**
- * Plugin Name: WooCommerce MOLPay
+ * Plugin Name: WooCommerce Seamless MOLPay
  * Plugin URI: http://www.molpay.com/
  * Description: WooCommerce MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce v2.3
  * Author: MOLPay Tech Team
@@ -96,15 +96,33 @@ function wcmolpay_gateway_load() {
             $this->merchant_id = $this->settings['merchant_id'];
             $this->verify_key = $this->settings['verify_key'];
 
+            // Define channel setting variables
+            $this->credit3 = ($this->get_option('credit3')=='yes' ? true : false);
+            $this->fpx = ($this->get_option('fpx')=='yes' ? true : false);
+            $this->maybank2u = ($this->get_option('maybank2u')=='yes' ? true : false);
+            $this->cimbclicks = ($this->get_option('cimbclicks')=='yes' ? true : false);
+            $this->hlb = ($this->get_option('hlb')=='yes' ? true : false);
+            $this->rhb = ($this->get_option('rhb')=='yes' ? true : false);
+            $this->amb = ($this->get_option('amb')=='yes' ? true : false);
+            $this->pbb = ($this->get_option('pbb')=='yes' ? true : false);
+            $this->affinonline = ($this->get_option('affinonline')=='yes' ? true : false);
+            $this->bankislam = ($this->get_option('bankislam')=='yes' ? true : false);
+            $this->molwallet = ($this->get_option('molwallet')=='yes' ? true : false);
+            $this->Point_BCard = ($this->get_option('Point-BCard')=='yes' ? true : false);
+            $this->dragonpay = ($this->get_option('dragonpay')=='yes' ? true : false);
+            $this->NGANLUONG = ($this->get_option('NGANLUONG')=='yes' ? true : false);
+            $this->paysbuy = ($this->get_option('paysbuy')=='yes' ? true : false);
+            $this->cash_711 = ($this->get_option('cash-711')=='yes' ? true : false);
+            $this->ATMVA = ($this->get_option('ATMVA')=='yes' ? true : false);
             // Actions.
             add_action( 'valid_molpay_request_returnurl', array( &$this, 'check_molpay_response_returnurl' ) );
             add_action( 'valid_molpay_request_callback', array( &$this, 'check_molpay_response_callback' ) );
-			add_action( 'valid_molpay_request_notification', array( &$this, 'check_molpay_response_notification' ) );
+            add_action( 'valid_molpay_request_notification', array( &$this, 'check_molpay_response_notification' ) );
             add_action( 'woocommerce_receipt_molpay', array( &$this, 'receipt_page' ) );
-			
+            
             //save setting configuration
             add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-						
+                        
             // Payment listener/API hook
             add_action( 'woocommerce_api_wc_molpay_gateway', array( $this, 'check_ipn_response' ) );
 
@@ -139,6 +157,7 @@ function wcmolpay_gateway_load() {
             <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
             </table><!--/.form-table-->
+
             <?php
         }
 
@@ -178,6 +197,113 @@ function wcmolpay_gateway_load() {
                     'type' => 'text',
                     'description' => __( 'Please enter your MOLPay Verify Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://www.onlinepayment.com.my/MOLPay/" target="_blank">', '</a>' ),
                     'default' => ''
+                ),
+                'channel' => array(
+                    'title'         => 'Channel to be Enabled',
+                    'type'          => 'title',
+                    'description'   => '',
+                ),
+                'credit3' => array(
+                    'title' => __( 'Credit Card/ Debit Card', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'fpx' => array(
+                    'title' => __( 'FPX', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'maybank2u' => array(
+                    'title' => __( 'MB2U', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'cimbclicks' => array(
+                    'title' => __( 'CIMBClicks', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'hlb' => array(
+                    'title' => __( 'HLB', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'rhb' => array(
+                    'title' => __( 'RHB', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'amb' => array(
+                    'title' => __( 'AMB', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'pbb' => array(
+                    'title' => __( 'PBB', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'affinonline' => array(
+                    'title' => __( 'Affin Online', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'bankislam' => array(
+                    'title' => __( 'Bank Islam', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'molwallet' => array(
+                    'title' => __( 'MOLWallet', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'Point-BCard' => array(
+                    'title' => __( 'Point-BCard', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'dragonpay' => array(
+                    'title' => __( 'Dragonpay', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'NGANLUONG' => array(
+                    'title' => __( 'NGANLUONG', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'paysbuy' => array(
+                    'title' => __( 'PaysBuy', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'cash-711' => array(
+                    'title' => __( 'Cash-711', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'ATMVA' => array(
+                    'title' => __( 'ATMVA', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
                 )
             );
         }
@@ -189,20 +315,20 @@ function wcmolpay_gateway_load() {
          * @return string
          */
         public function generate_form( $order_id ) {
-            $order = new WC_Order( $order_id );	
+            $order = new WC_Order( $order_id ); 
             $pay_url = $this->pay_url.$this->merchant_id;
             $total = $order->order_total;
-            $vcode = md5($order->order_total.$this->merchant_id.$order->id.$this->verify_key);	
-			
+            $vcode = md5($order->order_total.$this->merchant_id.$order->id.$this->verify_key);  
+            
             if ( sizeof( $order->get_items() ) > 0 ) 
                 foreach ( $order->get_items() as $item )
                     if ( $item['qty'] )
                         $item_names[] = $item['name'] . ' x ' . $item['qty'];
 
             $desc = sprintf( __( 'Order %s' , 'woocommerce'), $order->get_order_number() ) . " - " . implode( ', ', $item_names );
-						
+                        
             $molpay_args = array(
-                'vcode'	=> $vcode,
+                'vcode' => $vcode,
                 'orderid' => $order->id,
                 'amount' => $total,
                 'bill_name' => $order->billing_first_name." ".$order->billing_last_name,
@@ -219,24 +345,34 @@ function wcmolpay_gateway_load() {
             foreach ($molpay_args as $key => $value) {
                 $molpay_args_array[] = "<input type='hidden' name='".$key."' value='". $value ."' />";
             }
-			
+            
+            $mpsreturn = str_replace( 'https:', 'http:', add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) ));
+            
             return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form'>"
                     . implode('', $molpay_args_array)
                     // . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via MOLPay', 'woothemes') . "' /> "
                     // . "<a class='buttoncancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
-					."<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>"
-					."<script src='https://www.onlinepayment.com.my/MOLPay/API/seamless/3.0/js/MOLPay_seamless.deco.js'></script>"
-					."<h3><u>Pay via</u><img src='".plugins_url( 'images/molpay-logo.jpg', __FILE__ )."'>:</h3>"
-					."<br/>"
-					."<button type='button' style='background:none; padding:0px' style='background:none; padding:0px' id='myPay' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='credit' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-visa-master.png', __FILE__ )."' width='100px' height='50px'/></button>"
-					."<button type='button' style='background:none; padding:0px' id='myPay'  data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='fpx' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-mepsfpx.png', __FILE__ )."' width='100px' height='50px'/>	</button>"
-					."<button type='button' style='background:none; padding:0px' id='myPay' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='maybank2u' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-maybank.png', __FILE__ )."' width='100px' height='50px'/></button>"
-					."<button type='button' style='background:none; padding:0px' id='myPay'  data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='cimbclicks' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-cimb.png', __FILE__ )."' width='100px' height='50px'/></button>"
-					."<button type='button' style='background:none; padding:0px' id='myPay'  data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='hlb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-hongleong.png', __FILE__ )."' width='100px' height='50px'/></button>"
-					."<button type='button' style='background:none; padding:0px' id='myPay'  data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='rhb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-rhb.png', __FILE__ )."' width='100px' height='50px'/></button>"					
-					."<button type='button' style='background:none; padding:0px' id='myPay'  data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='amb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-ambank.png', __FILE__ )."' width='100px' height='50px'/></button>"
-					."<button type='button' style='background:none; padding:0px' id='myPay'  data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='pbb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-publicbank.png', __FILE__ )."' width='100px' height='50px'/>	</button>"
-					."<button type='button' style='background:none; padding:0px' id='myPay'  data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='cash-711' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."'><img src='".plugins_url( 'images/op-7e.png', __FILE__ )."' width='100px' height='50px'/>	</button>"
+                    ."<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>"
+                    ."<script src='https://www.onlinepayment.com.my/MOLPay/API/seamless/3.3/js/MOLPay_seamless.deco.js'></script>"
+                    ."<h3><u>Pay via</u><img src='".plugins_url( 'images/molpay-logo.jpg', __FILE__ )."'>:</h3>"
+                    ."<br/>"
+                    .($this->credit3 ? "<button type='button' style='background:none; padding:0px' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='credit3' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-credit.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '') 
+                    .($this->fpx ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='fpx' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-fpx.jpg', __FILE__ )."' width='100px' height='50px'/>   </button>" : '')
+                    .($this->maybank2u ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='maybank2u' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-m2u.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->cimbclicks ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='cimbclicks' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-cimb.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->hlb ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='hlb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-hlb.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->rhb ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='rhb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-rhb.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '')                   
+                    .($this->amb ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='amb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-amonline.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->pbb ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='pbb' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-pbe.jpg', __FILE__ )."' width='100px' height='50px'/>   </button>" : '')
+                    .($this->affinonline ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='affinonline' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-affin.jpg', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
+                    .($this->bankislam ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='bankislam' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-bank-islam.jpg', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
+                    .($this->molwallet ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='molwallet' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-molwallet.jpg', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
+                    .($this->Point_BCard ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='Point-BCard' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-bcard.png', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
+                    .($this->dragonpay ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='dragonpay' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-dragonpay.png', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
+                    .($this->NGANLUONG ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='NGANLUONG' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-nganluong.png', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
+                    .($this->paysbuy ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='paysbuy' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-paysbuy.png', __FILE__ )."' width='100px' height='50px'/>   </button>" : '')
+                    .($this->cash_711 ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='cash-711' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-7e.jpg', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
+                    .($this->ATMVA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='ATMVA' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-ATMVA.png', __FILE__ )."' width='100px' height='50px'/> </button>" : '')
                     //. "<script>document.molpay_payment_form.submit();</script>"
                     . "</form>";
         }
@@ -290,14 +426,14 @@ function wcmolpay_gateway_load() {
             else if ( $_POST['nbcb'] ) {
                 do_action ( "valid_molpay_request_callback", $_POST );
             }
-			else if ( $_POST['nbcb']=='2' ) {
+            else if ( $_POST['nbcb']=='2' ) {
                 do_action ( "valid_molpay_request_notification", $_POST );
             }
             else {
                 wp_die( "MOLPay Request Failure" );
             }
         }
-		
+        
         /**
          * This part is returnurl function for MOLPay
          * 
@@ -305,8 +441,8 @@ function wcmolpay_gateway_load() {
          */
         function check_molpay_response_returnurl() {
             global $woocommerce;
-			
-			$_POST[treq]= '1'; // Additional parameter for IPN
+            
+            $_POST[treq]= '1'; // Additional parameter for IPN
 
             $amount = $_POST['amount'];
             $orderid = $_POST['orderid'];
@@ -319,23 +455,23 @@ function wcmolpay_gateway_load() {
             $channel = $_POST['channel'];
             $skey = $_POST['skey'];
 
-			while ( list($k,$v) = each($_POST) ) {
-			$postData[]= $k."=".$v;
-			}
-			$postdata = implode("&",$postData);
-			$url = "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_POST , 1 );
-			curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
-			curl_setopt($ch, CURLOPT_URL , $url );
-			curl_setopt($ch, CURLOPT_HEADER , 1 );
-			curl_setopt($ch, CURLINFO_HEADER_OUT , TRUE );
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
-			curl_setopt($ch, CURLOPT_SSLVERSION , CURL_SSLVERSION_TLSv1 );
-			$result = curl_exec( $ch );
-			curl_close( $ch );
-			
+            while ( list($k,$v) = each($_POST) ) {
+            $postData[]= $k."=".$v;
+            }
+            $postdata = implode("&",$postData);
+            $url = "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_POST , 1 );
+            curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
+            curl_setopt($ch, CURLOPT_URL , $url );
+            curl_setopt($ch, CURLOPT_HEADER , 1 );
+            curl_setopt($ch, CURLINFO_HEADER_OUT , TRUE );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
+            curl_setopt($ch, CURLOPT_SSLVERSION , CURL_SSLVERSION_TLSv1 );
+            $result = curl_exec( $ch );
+            curl_close( $ch );
+            
             $vkey = $this->verify_key;
             $order = new WC_Order( $orderid );
 
@@ -349,12 +485,12 @@ function wcmolpay_gateway_load() {
             $referer = "<br>Referer: ReturnURL";
 
             if ($status == '00') {
-                $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);								
+                $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);                                
                 $order->payment_complete();
                 wp_redirect($order->get_checkout_order_received_url());
                 exit;
             }
-			else if ($status == "22") { 
+            else if ($status == "22") { 
                 $order->add_order_note('MOLPay Payment Status: PENDING'.'<br>Transaction ID: ' . $tranID . $referer);
                 $order->update_status('pending', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
                 wp_redirect($order->get_checkout_order_received_url());
@@ -371,62 +507,62 @@ function wcmolpay_gateway_load() {
                 $order->update_status('on-hold', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
                 wp_redirect($order->get_cancel_order_url());
                 exit;
-            }	
+            }   
         }
-		
-		/**
+        
+        /**
          * This part is callback function for MOLPay
          * 
          * @global mixed $woocommerce
          */
         function check_molpay_response_notification() {
             global $woocommerce;
-			
-			$_POST[treq]= '1'; // Additional parameter for IPN
-						
+            
+            $_POST[treq]= '1'; // Additional parameter for IPN
+                        
             $nbcb = $_POST['nbcb'];
-            $amount = $_POST['amount']; 			
+            $amount = $_POST['amount'];             
             $orderid = $_POST['orderid'];
             $tranID = $_POST['tranID'];
             $status = $_POST['status'];
-            $domain = $_POST['domain'];	
+            $domain = $_POST['domain']; 
             $currency = $_POST['currency'];
             $appcode = $_POST['appcode'];
             $paydate = $_POST['paydate'];
             $skey = $_POST['skey'];
             $vkey = $this->verify_key;
-			
-			while ( list($k,$v) = each($_POST) ) {
-			$postData[]= $k."=".$v;
-			}
-			$postdata = implode("&",$postData);
-			$url = "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_POST , 1 );
-			curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
-			curl_setopt($ch, CURLOPT_URL , $url );
-			curl_setopt($ch, CURLOPT_HEADER , 1 );
-			curl_setopt($ch, CURLINFO_HEADER_OUT , TRUE );
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
-			curl_setopt($ch, CURLOPT_SSLVERSION , CURL_SSLVERSION_TLSv1 );
-			$result = curl_exec( $ch );
-			curl_close( $ch );
-			
+            
+            while ( list($k,$v) = each($_POST) ) {
+            $postData[]= $k."=".$v;
+            }
+            $postdata = implode("&",$postData);
+            $url = "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_POST , 1 );
+            curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
+            curl_setopt($ch, CURLOPT_URL , $url );
+            curl_setopt($ch, CURLOPT_HEADER , 1 );
+            curl_setopt($ch, CURLINFO_HEADER_OUT , TRUE );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
+            curl_setopt($ch, CURLOPT_SSLVERSION , CURL_SSLVERSION_TLSv1 );
+            $result = curl_exec( $ch );
+            curl_close( $ch );
+            
             $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
             $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
 
             if ($skey != $key1)
                 $status = "-1";
-			
+            
             $order = new WC_Order( $orderid );
-            $referer = "<br>Referer: NotificationURL";	
-			
-            if ($status == "00") {				
-                $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);								
+            $referer = "<br>Referer: NotificationURL";  
+            
+            if ($status == "00") {              
+                $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);                                
                 $order->payment_complete();
-            }			
-			else if ($status == "22") { 
+            }           
+            else if ($status == "22") { 
                 $order->add_order_note('MOLPay Payment Status: PENDING'.'<br>Transaction ID: ' . $tranID . $referer);
                 $order->update_status('pending', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
             }
@@ -447,33 +583,33 @@ function wcmolpay_gateway_load() {
          */
         function check_molpay_response_callback() {
             global $woocommerce;
-						
+                        
             $nbcb = $_POST['nbcb'];
-            $amount = $_POST['amount']; 			
+            $amount = $_POST['amount'];             
             $orderid = $_POST['orderid'];
             $tranID = $_POST['tranID'];
             $status = $_POST['status'];
-            $domain = $_POST['domain'];	
+            $domain = $_POST['domain']; 
             $currency = $_POST['currency'];
             $appcode = $_POST['appcode'];
             $paydate = $_POST['paydate'];
             $skey = $_POST['skey'];
             $vkey = $this->verify_key;
-			
+            
             $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
             $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
 
             if ($skey != $key1)
                 $status = "-1";
-			
+            
             $order = new WC_Order( $orderid );
-            $referer = "<br>Referer: CallbackURL";	
-			
-            if ($status == "00") {				
-                $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);								
+            $referer = "<br>Referer: CallbackURL";  
+            
+            if ($status == "00") {              
+                $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);                                
                 $order->payment_complete();
-            }			
-			else if ($status == "22") { 
+            }           
+            else if ($status == "22") { 
                 $order->add_order_note('MOLPay Payment Status: PENDING'.'<br>Transaction ID: ' . $tranID . $referer);
                 $order->update_status('pending', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
             }
@@ -485,11 +621,11 @@ function wcmolpay_gateway_load() {
                 $order->add_order_note('MOLPay Payment Status: Invalid Transaction'.'<br>Transaction ID: ' . $tranID . $referer);
                 $order->update_status('on-hold', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
             }
-			
-			if ( $nbcb=='1' ) {
-				//callback IPN feedback to notified MOLPay
-				echo "CBTOKEN:MPSTATOK"; exit;
-			}
+            
+            if ( $nbcb=='1' ) {
+                //callback IPN feedback to notified MOLPay
+                echo "CBTOKEN:MPSTATOK"; exit;
+            }
         }
 
         /**
