@@ -97,6 +97,7 @@ function wcmolpay_gateway_load() {
             $this->verify_key = $this->settings['verify_key'];
 
             // Define channel setting variables
+            $this->credit = ($this->get_option('credit')=='yes' ? true : false);
             $this->credit3 = ($this->get_option('credit3')=='yes' ? true : false);
             $this->fpx = ($this->get_option('fpx')=='yes' ? true : false);
             $this->maybank2u = ($this->get_option('maybank2u')=='yes' ? true : false);
@@ -203,8 +204,14 @@ function wcmolpay_gateway_load() {
                     'type'          => 'title',
                     'description'   => '',
                 ),
+                'credit' => array(
+                    'title' => __( 'Credit Card/ Debit Card 1', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
                 'credit3' => array(
-                    'title' => __( 'Credit Card/ Debit Card', 'wcmolpay' ),
+                    'title' => __( 'Credit Card/ Debit Card 2', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
@@ -356,6 +363,7 @@ function wcmolpay_gateway_load() {
                     ."<script src='https://www.onlinepayment.com.my/MOLPay/API/seamless/3.3/js/MOLPay_seamless.deco.js'></script>"
                     ."<h3><u>Pay via</u><img src='".plugins_url( 'images/molpay-logo.jpg', __FILE__ )."'>:</h3>"
                     ."<br/>"
+                    .($this->credit ? "<button type='button' style='background:none; padding:0px' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='credit' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-credit.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '') 
                     .($this->credit3 ? "<button type='button' style='background:none; padding:0px' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='credit3' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-credit.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '') 
                     .($this->fpx ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='fpx' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-fpx.jpg', __FILE__ )."' width='100px' height='50px'/>   </button>" : '')
                     .($this->maybank2u ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='maybank2u' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-m2u.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '')
