@@ -86,7 +86,10 @@ function gateway_molpay($seperator, $sessionid) {
     for ($i=0; $i<$prod_size; $i++) {
         $p_name[] = $prod_res[$i]['name']." x ".$prod_res[$i]['quantity'];
     }
-    $p_desc = implode("\n",$p_name);
+    
+    if($p_name){
+    	$p_desc = implode("\n",$p_name);
+    }
 							
     $ship_sql  = "SELECT form_id,value FROM `".WPSC_TABLE_SUBMITED_FORM_DATA."` WHERE `log_id`='".$cart[0]['purchaseid']."' ";
     $ship_res  = $wpdb->get_results($ship_sql,ARRAY_A);
@@ -191,11 +194,12 @@ function gateway_molpay($seperator, $sessionid) {
         $output .= "<input type='hidden' name='$n' value='$v' />\n";
     }
 	
+    $plugins_url = plugins_url();    
     $output .= "<br><br>";
-    $output .= "<input type='image' src='wp-content/plugins/wp-e-commerce/images/molpay_logo.gif' name='submit'></form>";
-    $output .= "<br><input type='image' src='wp-content/plugins/wp-e-commerce/images/connect_molpay.gif' width='44' length='44'>";
+    $output .= "<input type='image' src='$plugins_url/wp-e-commerce/images/molpay_logo.gif' name='submit'></form>";
+    $output .= "<br><input type='image' src='$plugins_url/wp-e-commerce/images/connect_molpay.gif' width='44' length='44'>";
     $output .= "<br><br><font face='arial' size='2'>Please wait for a while.. You'll redirect to MOLPay Online Payment Gateway.</font></center>";
- 
+    
     //flush all the form to the browser view
     echo($output);
 
@@ -226,7 +230,7 @@ function nzshpcrt_molpay_callback() {
         $_POST['sessionid'] = $sessionid = $data->sessionid;
         $transid = $_REQUEST['tranID'];
         $retStatus = $_REQUEST['status'];
-        $url = get_option('transact_url') . "&sessionid=" . $sessionid;
+        $url = get_option('transact_url') . "?sessionid=" . $sessionid;
         
         if($retStatus == '00') {            
             $data = array(
