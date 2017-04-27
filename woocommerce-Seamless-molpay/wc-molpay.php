@@ -391,7 +391,7 @@ function wcmolpay_gateway_load() {
                     // . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via MOLPay', 'woothemes') . "' /> "
                     // . "<a class='buttoncancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
                     ."<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>"
-                    ."<script src='https://www.onlinepayment.com.my/MOLPay/API/seamless/3.7/js/MOLPay_seamless.deco.js'></script>"
+                    ."<script src='https://www.onlinepayment.com.my/MOLPay/API/seamless/3.12/js/MOLPay_seamless.deco.js'></script>"
                     ."<h3><u>Pay via</u><img src='".plugins_url( 'images/molpay-logo.jpg', __FILE__ )."'>:</h3>"
                     ."<br/>"
                     .($this->credit ? "<button type='button' style='background:none; padding:0px' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpstcctype='".$this->credit_tcctype."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='credit' data-mpsamount='".$total."' data-mpsorderid='".$order->id."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/payment-credit.jpg', __FILE__ )."' width='100px' height='50px'/></button>" : '') 
