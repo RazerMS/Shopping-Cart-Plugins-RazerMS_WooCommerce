@@ -375,7 +375,7 @@ function wcmolpay_gateway_load() {
                 'bill_desc' => $desc,
                 'country' => $order->billing_country,
                 'cur' => get_woocommerce_currency(),
-                'returnurl' => str_replace( 'https:', 'http:', add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) ))
+                'returnurl' => add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) )
             );
 
             $molpay_args_array = array();
@@ -384,7 +384,7 @@ function wcmolpay_gateway_load() {
                 $molpay_args_array[] = "<input type='hidden' name='".$key."' value='". $value ."' />";
             }
             
-            $mpsreturn = str_replace( 'https:', 'http:', add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) ));
+            $mpsreturn = add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) );
             
             return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form'>"
                     . implode('', $molpay_args_array)
