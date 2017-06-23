@@ -211,7 +211,7 @@ function wcmolpay_gateway_load() {
                 'bill_desc' => $desc,
                 'country' => $order->billing_country,
                 'cur' => get_woocommerce_currency(),
-                'returnurl' => str_replace( 'https:', 'http:', add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) ))
+                'returnurl' => add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) )
             );
 
             $molpay_args_array = array();
