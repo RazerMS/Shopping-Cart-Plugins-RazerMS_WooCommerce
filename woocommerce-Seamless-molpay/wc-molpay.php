@@ -95,6 +95,7 @@ function wcmolpay_gateway_load() {
             $this->description = $this->settings['description'];
             $this->merchant_id = $this->settings['merchant_id'];
             $this->verify_key = $this->settings['verify_key'];
+            $this->secret_key = $this->settings['secret_key'];
 
             // Define channel setting variables
             $this->credit = ($this->get_option('credit')=='yes' ? true : false);
@@ -137,6 +138,8 @@ function wcmolpay_gateway_load() {
 
             // Checking if verify_key is not empty.
             $this->verify_key == '' ? add_action( 'admin_notices', array( &$this, 'verify_key_missing_message' ) ) : '';
+            
+            $this->secret_key == '' ? add_action( 'admin_notices', array( &$this, 'secret_key_missing_message' ) ) : '';
         }
 
         /**
@@ -194,13 +197,19 @@ function wcmolpay_gateway_load() {
                 'merchant_id' => array(
                     'title' => __( 'Merchant ID', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your MOLPay Merchant ID.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://www.onlinepayment.com.my/MOLPay/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your MOLPay Merchant ID.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'verify_key' => array(
                     'title' => __( 'Verify Key', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your MOLPay Verify Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://www.onlinepayment.com.my/MOLPay/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your MOLPay Verify Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
+                    'default' => ''
+                ),
+                'secret_key' => array(
+                    'title' => __( 'Secret Key', 'wcmolpay' ),
+                    'type' => 'text',
+                    'description' => __( 'Please enter your MOLPay Secret Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'channel' => array(
@@ -511,7 +520,7 @@ function wcmolpay_gateway_load() {
             $result = curl_exec( $ch );
             curl_close( $ch );
             
-            $vkey = $this->verify_key;
+            $vkey = $this->secret_key;
             $order = new WC_Order( $orderid );
 
             $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
@@ -569,7 +578,7 @@ function wcmolpay_gateway_load() {
             $appcode = $_POST['appcode'];
             $paydate = $_POST['paydate'];
             $skey = $_POST['skey'];
-            $vkey = $this->verify_key;
+            $vkey = $this->secret_key;
             
             while ( list($k,$v) = each($_POST) ) {
             $postData[]= $k."=".$v;
@@ -633,7 +642,7 @@ function wcmolpay_gateway_load() {
             $appcode = $_POST['appcode'];
             $paydate = $_POST['paydate'];
             $skey = $_POST['skey'];
-            $vkey = $this->verify_key;
+            $vkey = $this->secret_key;
             
             $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
             $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
@@ -685,6 +694,13 @@ function wcmolpay_gateway_load() {
         public function verify_key_missing_message() {
             $message = '<div class="error">';
             $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your Verify Key in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '</div>';
+            echo $message;
+        }
+        
+        public function secret_key_missing_message() {
+            $message = '<div class="error">';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Secret Key in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
