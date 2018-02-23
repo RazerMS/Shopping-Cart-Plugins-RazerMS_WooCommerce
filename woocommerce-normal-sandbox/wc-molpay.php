@@ -334,7 +334,8 @@ function wcmolpay_gateway_load() {
 			$postData[]= $k."=".$v;
 			}
 			$postdata = implode("&",$postData);
-			$url = "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
+			$url = ($this->get_option('type')=='1') ? "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php" : "https://sandbox.molpay.com/MOLPay/API/chkstat/returnipn.php" ;
+			//"https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_POST , 1 );
 			curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
@@ -409,7 +410,8 @@ function wcmolpay_gateway_load() {
 			$postData[]= $k."=".$v;
 			}
 			$postdata = implode("&",$postData);
-			$url = "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
+			$url = ($this->get_option('type')=='1') ? "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php" : "https://sandbox.molpay.com/MOLPay/API/chkstat/returnipn.php" ;
+			//$url = "https://www.onlinepayment.com.my/MOLPay/API/chkstat/returnipn.php";
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_POST , 1 );
 			curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
