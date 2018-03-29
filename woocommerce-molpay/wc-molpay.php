@@ -343,30 +343,37 @@ function wcmolpay_gateway_load() {
             $order = new WC_Order( $orderid );
             $referer = "<br>Referer: ReturnURL";
 
-            if ($status == '00') {
-                $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);								
-                $order->payment_complete();
-                wp_redirect($order->get_checkout_order_received_url());
-                exit;
-            }
-			else if ($status == "22") { 
-                $order->add_order_note('MOLPay Payment Status: PENDING'.'<br>Transaction ID: ' . $tranID . $referer);
-                $order->update_status('pending', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
-                wp_redirect($order->get_checkout_order_received_url());
-                exit;
-            }
-            else if ($status == "11") { 
-                $order->add_order_note('MOLPay Payment Status: FAILED'.'<br>Transaction ID: ' . $tranID . $referer);
-                $order->update_status('failed', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+            $getStatus =  $order->get_status();
+        
+            if($getStatus == 'pending'){	
+		    if ($status == '00') {
+			$order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);        
+			$order->payment_complete();
+			wp_redirect($order->get_checkout_order_received_url());
+			exit;
+		    }
+		    else if ($status == "22") { 
+			$order->add_order_note('MOLPay Payment Status: PENDING'.'<br>Transaction ID: ' . $tranID . $referer);
+			$order->update_status('pending', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+			wp_redirect($order->get_checkout_order_received_url());
+			exit;
+		    }
+		    else if ($status == "11") { 
+			$order->add_order_note('MOLPay Payment Status: FAILED'.'<br>Transaction ID: ' . $tranID . $referer);
+			$order->update_status('failed', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+			wp_redirect($order->get_cancel_order_url());
+			exit;
+		    } 
+		    else  {
+			$order->add_order_note('MOLPay Payment Status: Invalid Transaction'.'<br>Transaction ID: ' . $tranID . $referer);
+			$order->update_status('on-hold', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+			wp_redirect($order->get_cancel_order_url());
+			exit;
+		    }
+	    else{
                 wp_redirect($order->get_cancel_order_url());
                 exit;
-            } 
-            else  {
-                $order->add_order_note('MOLPay Payment Status: Invalid Transaction'.'<br>Transaction ID: ' . $tranID . $referer);
-                $order->update_status('on-hold', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
-                wp_redirect($order->get_cancel_order_url());
-                exit;
-            }	
+            }  
         }
 		
 		/**
