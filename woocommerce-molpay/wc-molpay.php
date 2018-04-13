@@ -370,7 +370,7 @@ function wcmolpay_gateway_load() {
 			wp_redirect($order->get_cancel_order_url());
 			exit;
 		    }
-	    else{
+	    }else{
                 wp_redirect($order->get_cancel_order_url());
                 exit;
             }  
