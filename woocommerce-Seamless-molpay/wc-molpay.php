@@ -488,7 +488,7 @@ function wcmolpay_gateway_load() {
             if ( !( $_POST['nbcb'] )) {
                 do_action( "valid_molpay_request_returnurl", $_POST );
             } 
-            else if ( $_POST['nbcb'] ) {
+            else if ( $_POST['nbcb']=='1' ) {
                 do_action ( "valid_molpay_request_callback", $_POST );
             }
             else if ( $_POST['nbcb']=='2' ) {
