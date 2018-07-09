@@ -294,7 +294,7 @@ function wcmolpay_gateway_load() {
         function check_ipn_response() {
             @ob_clean();
 
-            if ( !( $_POST['nbcb'] )) {
+            if ( !( isset($_POST['nbcb']) )) {
                 do_action( "valid_molpay_request_returnurl", $_POST );
             } 
             else if ( $_POST['nbcb']=='1' ) {
@@ -316,7 +316,7 @@ function wcmolpay_gateway_load() {
         function check_molpay_response_returnurl() {
             global $woocommerce;
 			
-			$_POST[treq]= '1'; // Additional parameter for IPN
+			$_POST['treq']= '1'; // Additional parameter for IPN
 
             $amount = $_POST['amount'];
             $orderid = $_POST['orderid'];
@@ -393,14 +393,14 @@ function wcmolpay_gateway_load() {
         }
 		
 		/**
-         * This part is callback function for MOLPay
+         * This part is notification function for MOLPay
          * 
          * @global mixed $woocommerce
          */
         function check_molpay_response_notification() {
             global $woocommerce;
 			
-			$_POST[treq]= '1'; // Additional parameter for IPN
+			$_POST['treq']= '1'; // Additional parameter for IPN
 						
             $nbcb = $_POST['nbcb'];
             $amount = $_POST['amount']; 			
