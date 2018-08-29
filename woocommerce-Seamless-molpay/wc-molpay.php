@@ -251,7 +251,7 @@ function wcmolpay_gateway_load() {
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
-                'fpx_mb2u' => array(
+                'maybank2u' => array(
                     'title' => __( 'Maybank(Maybank2u)', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
