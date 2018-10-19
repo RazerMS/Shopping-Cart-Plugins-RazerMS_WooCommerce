@@ -381,9 +381,9 @@ function wcmolpay_gateway_load() {
                     exit;
                 }
             } elseif ($getStatus == 'success') {
-				wp_redirect($order->get_checkout_order_received_url());
-				exit;
-			} else {
+                wp_redirect($order->get_checkout_order_received_url());
+                exit;
+            } else {
                 wp_redirect($order->get_cancel_order_url());
                 exit;
             }   
