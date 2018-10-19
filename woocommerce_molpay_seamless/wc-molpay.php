@@ -96,10 +96,10 @@ function wcmolpay_gateway_load() {
             $this->verify_key = $this->settings['verify_key'];
             $this->secret_key = $this->settings['secret_key'];
             $this->account_type = $this->settings['account_type'];
-			
-			// Define hostname based on account_type
-			$this->url = ($this->get_option('account_type')=='1') ? "https://www.onlinepayment.com.my/" : "https://sandbox.molpay.com/" ;
-			
+            
+            // Define hostname based on account_type
+            $this->url = ($this->get_option('account_type')=='1') ? "https://www.onlinepayment.com.my/" : "https://sandbox.molpay.com/" ;
+            
             // Define channel setting variables
             $this->credit = ($this->get_option('credit')=='yes' ? true : false);
             $this->fpx = ($this->get_option('fpx')=='yes' ? true : false);
@@ -120,7 +120,7 @@ function wcmolpay_gateway_load() {
             $this->ATMVA = ($this->get_option('ATMVA')=='yes' ? true : false);
             $this->enetsD = ($this->get_option('enetsD')=='yes' ? true : false);
             $this->singpost = ($this->get_option('singpost')=='yes' ? true : false);
-			$this->UPOP = ($this->get_option('UPOP')=='yes' ? true : false);
+            $this->UPOP = ($this->get_option('UPOP')=='yes' ? true : false);
             $this->alipay = ($this->get_option('alipay')=='yes' ? true : false);
             $this->WeChatPay = ($this->get_option('WeChatPay')=='yes' ? true : false);
             
@@ -138,17 +138,17 @@ function wcmolpay_gateway_load() {
                         
             // Payment listener/API hook
             add_action( 'woocommerce_api_wc_molpay_gateway', array( $this, 'check_ipn_response' ) );
-			
+            
             // Checking if merchant_id is not empty.
             $this->merchant_id == '' ? add_action( 'admin_notices', array( &$this, 'merchant_id_missing_message' ) ) : '';
 
             // Checking if verify_key is not empty.
             $this->verify_key == '' ? add_action( 'admin_notices', array( &$this, 'verify_key_missing_message' ) ) : '';
-			
-			// Checking if secret_key is not empty.
+            
+            // Checking if secret_key is not empty.
             $this->secret_key == '' ? add_action( 'admin_notices', array( &$this, 'secret_key_missing_message' ) ) : '';
             
-			// Checking if account_type is not empty.
+            // Checking if account_type is not empty.
             $this->account_type == '' ? add_action( 'admin_notices', array( &$this, 'account_type_missing_message' ) ) : '';
         }
 
@@ -216,21 +216,21 @@ function wcmolpay_gateway_load() {
                     'default' => ''
                 ),
                 'secret_key' => array(
-					'title' => __( 'Secret Key', 'wcmolpay' ),
-					'type' => 'text',
-					'description' => __( 'Please enter your MOLPay Secret Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
-					'default' => ''
+                    'title' => __( 'Secret Key', 'wcmolpay' ),
+                    'type' => 'text',
+                    'description' => __( 'Please enter your MOLPay Secret Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
+                    'default' => ''
                 ),
-				'account_type' => array(
-					'title' => __( 'Account Type', 'wcmolpay' ),
-					'type' => 'select',
-					'label' => __( ' ', 'wcmolpay' ),
-					'default' => 'PRODUCTION',
-					'options' => array(
-						'1'  => __('PRODUCTION', 'wcmolpay' ),
-						'2' => __( 'SANDBOX', 'wcmolpay' )
-						)
-				),
+                'account_type' => array(
+                    'title' => __( 'Account Type', 'wcmolpay' ),
+                    'type' => 'select',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'PRODUCTION',
+                    'options' => array(
+                        '1'  => __('PRODUCTION', 'wcmolpay' ),
+                        '2' => __( 'SANDBOX', 'wcmolpay' )
+                        )
+                ),
                 'channel' => array(
                     'title'         => 'Channel to be Enabled',
                     'type'          => 'title',
@@ -338,36 +338,36 @@ function wcmolpay_gateway_load() {
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
-				'enetsD' => array(
+                'enetsD' => array(
                     'title' => __( 'eNETS', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
-				'singpost' => array(
+                'singpost' => array(
                     'title' => __( 'Cash-SAM', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
-				'UPOP' => array(
+                'UPOP' => array(
                     'title' => __( 'China Union Pay', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
-				'alipay' => array(
+                'alipay' => array(
                     'title' => __( 'Alipay', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
-				'WeChatPay' => array(
+                'WeChatPay' => array(
                     'title' => __( 'WeChatPay Cross Border', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
-                ),	
+                ),  
                 'tcctype' => array(
                     'title'         => 'Transaction Type for Credit Card / Debit Card Channel',
                     'type'          => 'title',
@@ -533,11 +533,11 @@ function wcmolpay_gateway_load() {
             $paydate = $_POST['paydate'];
             $channel = $_POST['channel'];
             $skey = $_POST['skey'];
-			$vkey = $this->secret_key;
-			
-			foreach($_POST as $k => $v) {
-				$postData[]= $k."=".$v;
-			}
+            $vkey = $this->secret_key;
+            
+            foreach($_POST as $k => $v) {
+                $postData[]= $k."=".$v;
+            }
             $postdata = implode("&",$postData);
             $url = $this->url."MOLPay/API/chkstat/returnipn.php";
             $ch = curl_init();
@@ -567,27 +567,30 @@ function wcmolpay_gateway_load() {
         
             if($getStatus == 'pending') {
                 if ($status == '00') {
-					$order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);        
-					$order->payment_complete();
-					wp_redirect($order->get_checkout_order_received_url());
+                    $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);        
+                    $order->payment_complete();
+                    wp_redirect($order->get_checkout_order_received_url());
                 } else if ($status == "22") { 
-					$order->add_order_note('MOLPay Payment Status: PENDING'.'<br>Transaction ID: ' . $tranID . $referer);
-					$order->update_status('pending', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
-					wp_redirect($order->get_checkout_order_received_url());
+                    $order->add_order_note('MOLPay Payment Status: PENDING'.'<br>Transaction ID: ' . $tranID . $referer);
+                    $order->update_status('pending', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+                    wp_redirect($order->get_checkout_order_received_url());
                 } else if ($status == "11") { 
-					$order->add_order_note('MOLPay Payment Status: FAILED'.'<br>Transaction ID: ' . $tranID . $referer);
-					$order->update_status('failed', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
-					wp_redirect($order->get_cancel_order_url());
+                    $order->add_order_note('MOLPay Payment Status: FAILED'.'<br>Transaction ID: ' . $tranID . $referer);
+                    $order->update_status('failed', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+                    wp_redirect($order->get_cancel_order_url());
                 }  else  {
-					$order->add_order_note('MOLPay Payment Status: Invalid Transaction'.'<br>Transaction ID: ' . $tranID . $referer);
-					$order->update_status('on-hold', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
-					wp_redirect($order->get_cancel_order_url());
+                    $order->add_order_note('MOLPay Payment Status: Invalid Transaction'.'<br>Transaction ID: ' . $tranID . $referer);
+                    $order->update_status('on-hold', sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+                    wp_redirect($order->get_cancel_order_url());
                 }
-				exit;
+                exit;
+            } elseif ($getStatus == 'success') {
+                wp_redirect($order->get_checkout_order_received_url());
+                exit;
             } else {
                 wp_redirect($order->get_cancel_order_url());
                 exit;
-            }    
+            } 
         }
         
         /**
@@ -612,9 +615,9 @@ function wcmolpay_gateway_load() {
             $skey = $_POST['skey'];
             $vkey = $this->secret_key;;
 
-			foreach($_POST as $k => $v) {
-				$postData[]= $k."=".$v;
-			}
+            foreach($_POST as $k => $v) {
+                $postData[]= $k."=".$v;
+            }
             $postdata = implode("&",$postData);
             $url = $this->url."MOLPay/API/chkstat/returnipn.php";
             $ch = curl_init();
@@ -728,7 +731,7 @@ function wcmolpay_gateway_load() {
          * Adds error message when not configured the secret_key.
          * 
          */
-		public function secret_key_missing_message() {
+        public function secret_key_missing_message() {
             $message = '<div class="error">';
             $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Secret Key in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
@@ -739,7 +742,7 @@ function wcmolpay_gateway_load() {
          * Adds error message when not configured the account_type.
          * 
          */
-		public function account_type_missing_message() {
+        public function account_type_missing_message() {
             $message = '<div class="error">';
             $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> Select account type in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
