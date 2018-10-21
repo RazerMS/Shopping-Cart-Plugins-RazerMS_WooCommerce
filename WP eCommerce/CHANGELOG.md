@@ -9,4 +9,4 @@
 
 ## v2.1.0 - Jun 9, 2015
 
-MOLPay Normal Integration Plugin for WP eCommerce
+- Release MOLPay Normal Integration Plugin for WP eCommerce
