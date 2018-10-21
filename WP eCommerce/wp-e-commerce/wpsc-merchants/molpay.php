@@ -4,7 +4,7 @@
 *
 * @package Payment Method
 * @author MOLPay Technical Team <technical@molpay.com>
-* @version 2.1.0
+* @version 2.1.1
 *
 */
 

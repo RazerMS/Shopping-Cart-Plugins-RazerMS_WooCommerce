@@ -1,0 +1,12 @@
+# Change log for WP eCommerce
+
+## v2.1.1 - May 20, 2016
+
+**Bug Fix:**
+
+- Order Information Correction
+- URL correction
+
+## v2.1.0 - Jun 9, 2015
+
+MOLPay Normal Integration Plugin for WP eCommerce
