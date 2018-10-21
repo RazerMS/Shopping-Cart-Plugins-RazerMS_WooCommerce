@@ -32,4 +32,5 @@
 - NBCB parameter handling - check callbackURL or notificationURL.
 
 ## v2.4.0 - Jun 7, 2018
-- MOLPay seamless plugin for sequential order numbers.
+
+- Release MOLPay seamless plugin for sequential order numbers.

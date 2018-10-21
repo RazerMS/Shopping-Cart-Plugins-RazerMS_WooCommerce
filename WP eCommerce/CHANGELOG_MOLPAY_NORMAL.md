@@ -1,4 +1,4 @@
-# Change log for WP eCommerce
+# Change log for WP eCommerce MOLPay Normal Plugin
 
 ## v2.1.1 - May 20, 2016
 

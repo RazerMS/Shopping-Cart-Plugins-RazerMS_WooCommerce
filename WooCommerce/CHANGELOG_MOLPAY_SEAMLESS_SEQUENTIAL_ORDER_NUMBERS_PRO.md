@@ -38,4 +38,5 @@
 - Remove error log feature.
 
 ## v2.4.0 - Jun 5, 2018
-- MOLPay seamless plugin for sequential order numbers pro.
+
+- Release MOLPay seamless plugin for sequential order numbers pro.
