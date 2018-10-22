@@ -3,7 +3,7 @@
  * MOLPay WooCommerce Shopping Cart Plugin
  * 
  * @author MOLPay Technical Team <technical@molpay.com>
- * @version 2.5.0
+ * @version 2.5.1
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
@@ -14,7 +14,7 @@
  * Description: WooCommerce MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: MOLPay Tech Team
  * Author URI: http:/www.molpay.com/
- * Version: 2.5.0
+ * Version: 2.5.1
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
@@ -358,7 +358,7 @@ function wcmolpay_gateway_load() {
 
             $getStatus =  $order->get_status();
         
-            if($getStatus == 'pending') {
+            if($getStatus != 'success') {
                 if ($status == '00') {
                     $order->add_order_note('MOLPay Payment Status: SUCCESSFUL'.'<br>Transaction ID: ' . $tranID . $referer);        
                     $order->payment_complete();
