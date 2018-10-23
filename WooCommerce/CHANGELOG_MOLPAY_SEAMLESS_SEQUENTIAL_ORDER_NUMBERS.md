@@ -1,11 +1,5 @@
 # Change log for WooCommerce MOLPay Seamless Plugin for Sequential Order Numbers
 
-## v2.5.2 - Oct 23, 2018
-
-**Updates:**
-
-- Plugin naming changes.
-
 ## v2.5.1 - Oct 22, 2018
 
 **Bug Fix:**
