@@ -3,18 +3,18 @@
  * MOLPay WooCommerce Shopping Cart Plugin
  * 
  * @author MOLPay Technical Team <technical@molpay.com>
- * @version 2.5.2
+ * @version 2.5.1
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
 
 /**
- * Plugin Name: WooCommerce MOLPay Seamless for Sequential Order Numbers 
+ * Plugin Name: WooCommerce Seamless MOLPay for Sequential Order Numbers 
  * Plugin URI: http://www.molpay.com/
  * Description: WooCommerce MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: MOLPay Tech Team
  * Author URI: http:/www.molpay.com/
- * Version: 2.5.2
+ * Version: 2.5.1
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
