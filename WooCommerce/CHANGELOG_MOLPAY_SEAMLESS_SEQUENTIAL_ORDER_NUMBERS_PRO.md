@@ -2,7 +2,7 @@
 
 ## v2.5.2 - Oct 23, 2018
 
-**Bug Fix:**
+**Updates:**
 
 - Plugin naming changes.
 
