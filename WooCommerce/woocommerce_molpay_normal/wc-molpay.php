@@ -10,10 +10,10 @@
 
 /**
  * Plugin Name: WooCommerce MOLPay Normal
- * Plugin URI: http://www.molpay.com/
+ * Plugin URI: https://github.com/MOLPay/WordPress_WooCommerce_WP-eCommerce_ClassiPress
  * Description: WooCommerce MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: MOLPay Tech Team
- * Author URI: http:/www.molpay.com/
+ * Author URI: https:/www.molpay.com/
  * Version: 2.6.0
  * License: MIT
  * Text Domain: wcmolpay
