@@ -6,6 +6,7 @@
 
 **Updates:**
 
+- Update author & plugin link.
 - Restructure response handling.
 - When failed response handling, inquiry before update record.
 
