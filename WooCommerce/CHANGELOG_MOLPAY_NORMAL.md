@@ -1,5 +1,14 @@
 # Change log for WooCommerce MOLPay Normal Plugin
 
+## v2.6.0 - Apr 2, 2019
+
+- Release version 2.6.0
+
+**Updates:**
+
+- Restructure response handling.
+- When failed response handling, inquiry before update record.
+
 ## v2.5.1 - Oct 22, 2018
 
 **Bug Fix:**
