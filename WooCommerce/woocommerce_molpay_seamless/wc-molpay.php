@@ -3,7 +3,7 @@
  * MOLPay WooCommerce Shopping Cart Plugin
  * 
  * @author MOLPay Technical Team <technical@molpay.com>
- * @version 2.6.0
+ * @version 2.7.0
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
@@ -14,7 +14,7 @@
  * Description: WooCommerce MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: MOLPay Tech Team
  * Author URI: https:/www.molpay.com/
- * Version: 2.6.0
+ * Version: 2.7.0
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
@@ -92,6 +92,8 @@ function wcmolpay_gateway_load() {
 
             // Define user setting variables.
             $this->title = $this->settings['title'];
+            $this->ordering_plugin = $this->get_option('ordering_plugin');
+            $this->payment_title = $this->settings['payment_title'];
             $this->description = $this->settings['description'];
             $this->merchant_id = $this->settings['merchant_id'];
             $this->verify_key = $this->settings['verify_key'];
@@ -193,17 +195,40 @@ function wcmolpay_gateway_load() {
                     'label' => __( 'Enable MOLPay', 'wcmolpay' ),
                     'default' => 'yes'
                 ),
+                'ordering_plugin' => array(
+                    'title' => __( '<p style="color:red;">Installed Ordering Plugins</p>', 'wcmolpay' ),
+                    'type' => 'select',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'Sequential Order Numbers',
+                    'options' => array(
+                        '0' => __( 'Not install any ordering plugin', 'wcmolpay'),
+                        '1' => __( 'Sequential Order Numbers', 'wcmolpay' ),
+                        '2' => __( 'Sequential Order Numbers Pro', 'wcmolpay' )
+                    ),
+                    'description' => __( 'Please select correct ordering plugin as it will affect your order result!!', 'wcmolpay' ),
+                    'desc_tip' => true,
+                ),
                 'title' => array(
                     'title' => __( 'Title', 'wcmolpay' ),
                     'type' => 'text',
                     'description' => __( 'This controls the title which the user sees during checkout.', 'wcmolpay' ),
-                    'default' => __( 'MOLPay Malaysia Online Payment', 'wcmolpay' )
+                    'default' => __( 'MOLPay Malaysia Online Payment', 'wcmolpay' ),
+                    'desc_tip' => true,
+                ),
+                'payment_title' => array(
+                    'title' => __( 'Payment Title', 'wcmolpay'),
+                    'type' => 'checkbox',
+                    'label' => __( 'Showing channel instead of gateway title after payment.'),
+                    'description' => __( 'This controls the payment method which the user sees after payment.', 'wcmolpay' ),
+                    'default' => 'no',
+                    'desc_tip' => true
                 ),
                 'description' => array(
                     'title' => __( 'Description', 'wcmolpay' ),
                     'type' => 'textarea',
                     'description' => __( 'This controls the description which the user sees during checkout.', 'wcmolpay' ),
-                    'default' => __( 'Pay with MOLPay Malaysia Online Payment', 'wcmolpay' )
+                    'default' => __( 'Pay with MOLPay Malaysia Online Payment', 'wcmolpay' ),
+                    'desc_tip' => true,
                 ),
                 'merchant_id' => array(
                     'title' => __( 'Merchant ID', 'wcmolpay' ),
@@ -398,7 +423,7 @@ function wcmolpay_gateway_load() {
             $order = new WC_Order( $order_id );
             $pay_url = $this->url.'MOLPay/pay/'.$this->merchant_id;
             $total = $order->order_total;
-			$order_number = $order->get_order_number();
+            $order_number = $order->get_order_number();
             $vcode = md5($order->order_total.$this->merchant_id.$order_number.$this->verify_key);
             
             if ( sizeof( $order->get_items() ) > 0 ) 
@@ -518,62 +543,28 @@ function wcmolpay_gateway_load() {
         }
         
         /**
-         * This part is returnurl function for MOLPay
+         * This part is handle return response
          * 
          * @global mixed $woocommerce
          */
         function check_molpay_response_returnurl() {
             global $woocommerce;
             
-            $_POST['treq']= '1'; // Additional parameter for IPN
-
-            $amount = $_POST['amount'];
-            $orderid = $_POST['orderid'];
-            $appcode = $_POST['appcode'];
-            $tranID = $_POST['tranID'];
-            $domain = $_POST['domain'];
+            $verifyresult = $this->verifySkey($_POST);
             $status = $_POST['status'];
-            $currency = $_POST['currency'];
-            $paydate = $_POST['paydate'];
-            $channel = $_POST['channel'];
-            $skey = $_POST['skey'];
-            $vkey = $this->secret_key;
-            
-            foreach($_POST as $k => $v) {
-                $postData[]= $k."=".$v;
-            }
-            $postdata = implode("&",$postData);
-            $url = $this->url."MOLPay/API/chkstat/returnipn.php";
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_POST , 1 );
-            curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
-            curl_setopt($ch, CURLOPT_URL , $url );
-            curl_setopt($ch, CURLOPT_HEADER , 1 );
-            curl_setopt($ch, CURLINFO_HEADER_OUT , TRUE );
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
-            curl_setopt($ch, CURLOPT_SSLVERSION , CURL_SSLVERSION_TLSv1 );
-            $result = curl_exec( $ch );
-            curl_close( $ch );
-            
-            $order = new WC_Order( $orderid );
+            if( !$verifyresult )
+                $status = "-1";
 
-            $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
-            $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
-
-            // invalid transaction
-            if( $skey != $key1 )
-                $status = -1;
-
+            $WCOrderId = $this->get_WCOrderIdByOrderId($_POST['orderid']);
+            $order = new WC_Order( $WCOrderId );
             $referer = "<br>Referer: ReturnURL";
-
             $getStatus =  $order->get_status();
             if($getStatus != 'success') {
                 if ($status == "11") {
                     $referer .= " (Inquiry)";
-                    $status = $this->inquiry_status( $tranID, $amount, $domain);
+                    $status = $this->inquiry_status( $_POST['tranID'], $_POST['amount'], $_POST['domain']);
                 }
-                $this->update_Cart_by_Status($orderid, $status, $tranID, $referer);
+                $this->update_Cart_by_Status($WCOrderId, $status, $_POST['tranID'], $referer, $_POST['channel']);
                 if (in_array($status, array("00","22"))) {
                     wp_redirect($order->get_checkout_order_received_url());
                 } else {
@@ -582,93 +573,44 @@ function wcmolpay_gateway_load() {
             } else {
                 wp_redirect($order->get_checkout_order_received_url());
             }
+            $this->acknowledgeResponse($_POST);
             exit;
         }
         
         /**
-         * This part is callback function for MOLPay
+         * This part is handle notification response
          * 
          * @global mixed $woocommerce
          */
         function check_molpay_response_notification() {
             global $woocommerce;
-            
-            $_POST['treq']= '1'; // Additional parameter for IPN
-                        
-            $nbcb = $_POST['nbcb'];
-            $amount = $_POST['amount'];
-            $orderid = $_POST['orderid'];
-            $tranID = $_POST['tranID'];
+            $verifyresult = $this->verifySkey($_POST);
             $status = $_POST['status'];
-            $domain = $_POST['domain'];
-            $currency = $_POST['currency'];
-            $appcode = $_POST['appcode'];
-            $paydate = $_POST['paydate'];
-            $skey = $_POST['skey'];
-            $vkey = $this->secret_key;;
-
-            foreach($_POST as $k => $v) {
-                $postData[]= $k."=".$v;
-            }
-            $postdata = implode("&",$postData);
-            $url = $this->url."MOLPay/API/chkstat/returnipn.php";
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_POST , 1 );
-            curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
-            curl_setopt($ch, CURLOPT_URL , $url );
-            curl_setopt($ch, CURLOPT_HEADER , 1 );
-            curl_setopt($ch, CURLINFO_HEADER_OUT , TRUE );
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
-            curl_setopt($ch, CURLOPT_SSLVERSION , CURL_SSLVERSION_TLSv1 );
-            $result = curl_exec( $ch );
-            curl_close( $ch );
-            
-            $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
-            $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
-
-            if ($skey != $key1)
+            if ( !$verifyresult )
                 $status = "-1";
 
+            $WCOrderId = $this->get_WCOrderIdByOrderId($_POST['orderid']);
             $referer = "<br>Referer: NotificationURL";
-
-            $this->update_Cart_by_Status($orderid, $status, $tranID, $referer);
+            $this->update_Cart_by_Status($WCOrderId, $status, $_POST['tranID'], $referer, $_POST['channel']);
+            $this->acknowledgeResponse($_POST);
         }
 
         /**
-         * This part is callback function for MOLPay
+         * This part is handle callback response
          * 
          * @global mixed $woocommerce
          */
         function check_molpay_response_callback() {
             global $woocommerce;
-                        
-            $nbcb = $_POST['nbcb'];
-            $amount = $_POST['amount'];
-            $orderid = $_POST['orderid'];
-            $tranID = $_POST['tranID'];
+            $verifyresult = $this->verifySkey($_POST);
             $status = $_POST['status'];
-            $domain = $_POST['domain']; 
-            $currency = $_POST['currency'];
-            $appcode = $_POST['appcode'];
-            $paydate = $_POST['paydate'];
-            $skey = $_POST['skey'];
-            $vkey = $this->secret_key;
-            
-            $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
-            $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
-
-            if ($skey != $key1)
+            if ( !$verifyresult )
                 $status = "-1";
             
+            $WCOrderId = $this->get_WCOrderIdByOrderId($_POST['orderid']);
             $referer = "<br>Referer: CallbackURL";
-            
-            $this->update_Cart_by_Status($orderid, $status, $tranID, $referer);
-            
-            if ( $nbcb=='1' ) {
-                //callback IPN feedback to notified MOLPay
-                echo "CBTOKEN:MPSTATOK"; exit;
-            }
+            $this->update_Cart_by_Status($WCOrderId, $status, $_POST['tranID'], $referer, $_POST['channel']);
+            $this->acknowledgeResponse($_POST);
         }
 
         /**
@@ -677,7 +619,7 @@ function wcmolpay_gateway_load() {
          */
         public function merchant_id_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your Merchant ID in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Merchant ID in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -688,7 +630,7 @@ function wcmolpay_gateway_load() {
          */
         public function verify_key_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should inform your Verify Key in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Verify Key in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -766,7 +708,7 @@ function wcmolpay_gateway_load() {
          * @param int $tranID
          * @param string $referer
          */
-        public function update_Cart_by_Status($orderid, $MOLPay_status, $tranID, $referer) {
+        public function update_Cart_by_Status($orderid, $MOLPay_status, $tranID, $referer, $channel) {
             global $woocommerce;
 
             $order = new WC_Order( $orderid );
@@ -794,6 +736,93 @@ function wcmolpay_gateway_load() {
             } else {
                 $order->update_status($W_status, sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
             }
+            if ($this->payment_title == 'yes') {
+                $paytitle = $this->form_fields[strtolower($channel)]['title'];
+                $order->set_payment_method_title($paytitle);
+                $order->save();
+            }
+        }
+
+
+        /**
+         * Obtain the original order id based using the returned transaction order id
+         * 
+         * @global mixed $woocommerce
+         * @param int $orderid
+         * @return int $real_order_id
+         */
+        public function get_WCOrderIdByOrderId($orderid) {
+            switch($this->ordering_plugin) {
+                case '1' : 
+                    $WCOrderId = wc_sequential_order_numbers()->find_order_by_order_number( $orderid );
+                    break;
+                case '2' : 
+                    $WCOrderId = wc_seq_order_number_pro()->find_order_by_order_number( $orderid );
+                    break;
+                case '0' : 
+                default :
+                    $WCOrderId = $orderid;
+                    break;
+            }
+            return $WCOrderId;
+        }
+
+        /**
+         * Acknowledge transaction result
+         * 
+         * @global mixed $woocommerce
+         * @param array $response
+         */
+        public function acknowledgeResponse($response) {
+            if ($response['nbcb'] == '1') {
+                echo "CBTOKEN:MPSTATOK"; exit;
+            } else {
+                $response['treq']= '1'; // Additional parameter for IPN
+                foreach($response as $k => $v) {
+                    $postData[]= $k."=".$v;
+                }
+                $postdata = implode("&",$postData);
+                $url = $this->url."MOLPay/API/chkstat/returnipn.php";
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_POST , 1 );
+                curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
+                curl_setopt($ch, CURLOPT_URL , $url );
+                curl_setopt($ch, CURLOPT_HEADER , 1 );
+                curl_setopt($ch, CURLINFO_HEADER_OUT , TRUE );
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , FALSE);
+                curl_setopt($ch, CURLOPT_SSLVERSION , CURL_SSLVERSION_TLSv1 );
+                $result = curl_exec( $ch );
+                curl_close( $ch );
+            }
+        }
+
+        /**
+         * To verify transaction result using merchant secret key setting.
+         * 
+         * @global mixed $woocommerce
+         * @param  array $response
+         * @return boolean verifyresult
+         */
+        public function verifySkey($response) {
+
+            $amount = $response['amount'];
+            $orderid = $response['orderid'];
+            $tranID = $response['tranID'];
+            $status = $response['status'];
+            $domain = $response['domain']; 
+            $currency = $response['currency'];
+            $appcode = $response['appcode'];
+            $paydate = $response['paydate'];
+            $skey = $response['skey'];
+            $vkey = $this->secret_key;
+            
+            $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
+            $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
+            if ($skey != $key1)
+                return false;
+            else
+                return true;
         }
 
     }
