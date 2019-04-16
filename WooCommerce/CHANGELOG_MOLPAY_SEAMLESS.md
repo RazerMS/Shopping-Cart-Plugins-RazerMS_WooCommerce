@@ -1,5 +1,17 @@
 # Change log for WooCommerce MOLPay Seamless Plugin
 
+## v2.7.0 - Apr 16, 2019
+
+- Release version 2.7.0
+
+**Updates:**
+
+- Implement function to handle response.
+- Ordering plugins:
+  - Support ordering plugins like Sequential Order Numbers and Sequential Order Numbers Pro.
+- Payment title:
+  - Showing channel instead of gateway title in order summary, invoice, etc.
+
 ## v2.6.0 - Apr 2, 2019
 
 - Release version 2.6.0
