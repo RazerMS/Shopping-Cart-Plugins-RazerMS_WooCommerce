@@ -3,7 +3,7 @@
  * MOLPay WooCommerce Shopping Cart Plugin
  * 
  * @author MOLPay Technical Team <technical@molpay.com>
- * @version 2.7.0
+ * @version 2.7.1
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
@@ -14,7 +14,7 @@
  * Description: WooCommerce MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: MOLPay Tech Team
  * Author URI: https:/www.molpay.com/
- * Version: 2.7.0
+ * Version: 2.7.1
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
@@ -378,7 +378,7 @@ function wcmolpay_gateway_load() {
             $order = new WC_Order( $WCOrderId );
             $referer = "<br>Referer: ReturnURL";
             $getStatus =  $order->get_status();
-            if($getStatus != 'success') {
+            if(!in_array($getStatus,array('processing','completed'))) {
                 if ($status == "11") {
                     $referer .= " (Inquiry)";
                     $status = $this->inquiry_status( $_POST['tranID'], $_POST['amount'], $_POST['domain']);
@@ -549,16 +549,19 @@ function wcmolpay_gateway_load() {
                     break;
             }
 
-            $order->add_order_note('MOLPay Payment Status: '.$M_status.'<br>Transaction ID: ' . $tranID . $referer);
-            if ($MOLPay_status == "00") {
-                $order->payment_complete();
-            } else {
-                $order->update_status($W_status, sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
-            }
-            if ($this->payment_title == 'yes') {
-                $paytitle = $this->payment_titles[strtolower($channel)];
-                $order->set_payment_method_title($paytitle);
-                $order->save();
+            $getStatus = $order->get_status();
+            if(!in_array($getStatus,array('processing','completed'))) {
+                $order->add_order_note('MOLPay Payment Status: '.$M_status.'<br>Transaction ID: ' . $tranID . $referer);
+                if ($MOLPay_status == "00") {
+                    $order->payment_complete();
+                } else {
+                    $order->update_status($W_status, sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+                }
+                if ($this->payment_title == 'yes') {
+                    $paytitle = $this->payment_titles[strtolower($channel)];
+                    $order->set_payment_method_title($paytitle);
+                    $order->save();
+                }
             }
         }
 
