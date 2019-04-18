@@ -4,7 +4,7 @@
 
 **Bug Fix:**
 
-- Disable duplicate record update into system after succeed payment.
+- Prevent duplicate record update into system after succeed payment.
 
 ## v2.7.0 - Apr 16, 2019
 
