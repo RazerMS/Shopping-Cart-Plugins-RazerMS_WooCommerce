@@ -1,5 +1,11 @@
 # Change log for WooCommerce MOLPay Seamless Plugin
 
+## v2.7.1 - Apr 18, 2019
+
+**Bug Fix:**
+
+- Disable duplicate record update into system after succeed payment.
+
 ## v2.7.0 - Apr 16, 2019
 
 - Release version 2.7.0
