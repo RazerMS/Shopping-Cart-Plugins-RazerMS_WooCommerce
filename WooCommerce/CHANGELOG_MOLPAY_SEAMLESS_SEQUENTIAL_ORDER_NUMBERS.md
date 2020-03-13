@@ -1,4 +1,15 @@
-# Change log for WooCommerce MOLPay Seamless Plugin for Sequential Order Numbers
+# Change log for WooCommerce Razer Merchant Services Seamless Plugin for Sequential Order Numbers
+
+## v3.0.0 - Mar 13, 2020
+
+- Release version 3.0.0
+
+**Updates:**
+
+- Rebrand to Razer Merchant Services.
+- Update FPX channel logos in accordance to FPX Compliance.
+- Add support for e-wallet channels.
+- Remove FPX-TPA and MOLWallet channels.
 
 ## v2.6.0 - Apr 2, 2019
 

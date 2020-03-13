@@ -1,20 +1,20 @@
 <?php
 /**
- * MOLPay WooCommerce Shopping Cart Plugin
+ * Razer Merchant Services WooCommerce Shopping Cart Plugin
  * 
- * @author MOLPay Technical Team <technical@molpay.com>
- * @version 2.7.1
+ * @author Razer Merchant Services Technical Team <technical-sa@razer.com>
+ * @version 3.0.0
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
 
 /**
- * Plugin Name: WooCommerce MOLPay Normal
- * Plugin URI: https://github.com/MOLPay/WordPress_WooCommerce_WP-eCommerce_ClassiPress
- * Description: WooCommerce MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
- * Author: MOLPay Tech Team
- * Author URI: https:/www.molpay.com/
- * Version: 2.7.1
+ * Plugin Name: WooCommerce Razer Merchant Services Normal
+ * Plugin URI: https://github.com/RazerMS/WordPress_WooCommerce_WP-eCommerce_ClassiPress
+ * Description: WooCommerce Razer Merchant Services | The leading payment gateway in South East Asia Grow your business with Razer Merchant Services payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
+ * Author: Razer Merchant Services Tech Team
+ * Author URI: https://merchant.razer.com/
+ * Version: 3.0.0
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
@@ -29,7 +29,7 @@
  */
 function wcmolpay_woocommerce_fallback_notice() {
     $message = '<div class="error">';
-    $message .= '<p>' . __( 'WooCommerce MOLPay Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to work!' , 'wcmolpay' ) . '</p>';
+    $message .= '<p>' . __( 'WooCommerce Razer Merchant Services Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to work!' , 'wcmolpay' ) . '</p>';
     $message .= '</div>';
     echo $message;
 }
@@ -38,7 +38,7 @@ function wcmolpay_woocommerce_fallback_notice() {
 add_action( 'plugins_loaded', 'wcmolpay_gateway_load', 0 );
 
 /**
- * Load MOLPay gateway plugin function
+ * Load Razer Merchant Services gateway plugin function
  * 
  * @return mixed
  */
@@ -54,7 +54,7 @@ function wcmolpay_gateway_load() {
     add_filter( 'woocommerce_payment_gateways', 'wcmolpay_add_gateway' );
 
     /**
-     * Add MOLPay gateway to ensure WooCommerce can load it
+     * Add Razer Merchant Services gateway to ensure WooCommerce can load it
      * 
      * @param array $methods
      * @return array
@@ -65,13 +65,13 @@ function wcmolpay_gateway_load() {
     }
 
     /**
-     * Define the MOLPay gateway
+     * Define the Razer Merchant Services gateway
      * 
      */
     class WC_Molpay_Gateway extends WC_Payment_Gateway {
 
         /**
-         * Construct the MOLPay gateway class
+         * Construct the Razer Merchant Services gateway class
          * 
          * @global mixed $woocommerce
          */
@@ -79,10 +79,10 @@ function wcmolpay_gateway_load() {
             global $woocommerce;
 
             $this->id = 'molpay';
-            $this->icon = plugins_url( 'images/molpay.gif', __FILE__ );
+            $this->icon = plugins_url( 'images/logo_RazerMerchantServices.png', __FILE__ );
             $this->has_fields = false;
-            $this->method_title = __( 'MOLPay', 'wcmolpay' );
-            $this->method_description = __( 'Proceed payment via MOLPay Normal Integration Plugin', 'woocommerce' );
+            $this->method_title = __( 'Razer Merchant Services', 'wcmolpay' );
+            $this->method_description = __( 'Proceed payment via Razer Merchant Services Normal Integration Plugin', 'woocommerce' );
 
             // Load the form fields.
             $this->init_form_fields();
@@ -101,8 +101,8 @@ function wcmolpay_gateway_load() {
             $this->account_type = $this->settings['account_type'];
             
             // Define hostname based on account_type
-            $this->url = ($this->get_option('account_type')=='1') ? "https://www.onlinepayment.com.my/" : "https://sandbox.molpay.com/" ;
-            $this->inquiry_url = ($this->get_option('account_type')=='1') ? "https://api.molpay.com/" : "https://sandbox.molpay.com/" ;
+            $this->url = ($this->get_option('account_type')=='1') ? "https://www.onlinepayment.com.my/" : "https://sandbox.merchant.razer.com/" ;
+            $this->inquiry_url = ($this->get_option('account_type')=='1') ? "https://api.merchant.razer.com/" : "https://sandbox.merchant.razer.com/" ;
             
             // Actions.
             add_action( 'valid_molpay_request_returnurl', array( &$this, 'check_molpay_response_returnurl' ) );
@@ -145,7 +145,7 @@ function wcmolpay_gateway_load() {
                 'dragonpay'         => 'Dragonpay',
                 'NGANLUONG'         => 'NGANLUONG',
                 'paysbuy'           => 'PaysBuy',
-                'cash-711'          => '7-Eleven (MOLPay Cash)',
+                'cash-711'          => '7-Eleven (Razer Cash)',
                 'ATMVA'             => 'ATM Transfer via Permata Bank',
                 'enetsD'            => 'eNETS',
                 'singpost'          => 'Cash-SAM',
@@ -173,8 +173,8 @@ function wcmolpay_gateway_load() {
          */
         public function admin_options() {
             ?>
-            <h3><?php _e( 'MOLPay Online Payment', 'wcmolpay' ); ?></h3>
-            <p><?php _e( 'MOLPay Online Payment works by sending the user to MOLPay to enter their payment information.', 'wcmolpay' ); ?></p>
+            <h3><?php _e( 'Razer Merchant Services', 'wcmolpay' ); ?></h3>
+            <p><?php _e( 'Razer Merchant Services works by sending the user to Razer Merchant Services to enter their payment information.', 'wcmolpay' ); ?></p>
             <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
             </table><!--/.form-table-->
@@ -190,7 +190,7 @@ function wcmolpay_gateway_load() {
                 'enabled' => array(
                     'title' => __( 'Enable/Disable', 'wcmolpay' ),
                     'type' => 'checkbox',
-                    'label' => __( 'Enable MOLPay', 'wcmolpay' ),
+                    'label' => __( 'Enable Razer Merchant Services', 'wcmolpay' ),
                     'default' => 'yes'
                 ),
                 'ordering_plugin' => array(
@@ -210,7 +210,7 @@ function wcmolpay_gateway_load() {
                     'title' => __( 'Title', 'wcmolpay' ),
                     'type' => 'text',
                     'description' => __( 'This controls the title which the user sees during checkout.', 'wcmolpay' ),
-                    'default' => __( 'MOLPay Malaysia Online Payment', 'wcmolpay' ),
+                    'default' => __( 'Razer Merchant Services', 'wcmolpay' ),
                     'desc_tip' => true,
                 ),
                 'payment_title' => array(
@@ -225,25 +225,25 @@ function wcmolpay_gateway_load() {
                     'title' => __( 'Description', 'wcmolpay' ),
                     'type' => 'textarea',
                     'description' => __( 'This controls the description which the user sees during checkout.', 'wcmolpay' ),
-                    'default' => __( 'Pay with MOLPay Malaysia Online Payment', 'wcmolpay' ),
+                    'default' => __( 'Pay with Razer Merchant Services', 'wcmolpay' ),
                     'desc_tip' => true,
                 ),
                 'merchant_id' => array(
                     'title' => __( 'Merchant ID', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your MOLPay Merchant ID.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your Razer Merchant Services Merchant ID.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sRazer Merchant Services Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'verify_key' => array(
                     'title' => __( 'Verify Key', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your MOLPay Verify Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your Razer Merchant Services Verify Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sRazer Merchant Services Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'secret_key' => array(
                     'title' => __( 'Secret Key', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your MOLPay Secret Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sMOLPay Account%s.', 'wcmolpay' ), '<a href="https://portal.molpay.com/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your Razer Merchant Services Secret Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sRazer Merchant Services Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'account_type' => array(
@@ -267,7 +267,7 @@ function wcmolpay_gateway_load() {
          */
         public function generate_form( $order_id ) {
             $order = new WC_Order( $order_id ); 
-            $pay_url = $this->url.'MOLPay/pay/'.$this->merchant_id;
+            $pay_url = $this->url.'RMS/pay/'.$this->merchant_id;
             $total = $order->order_total;
             $order_number = $order->get_order_number();
             $vcode = md5($order->order_total.$this->merchant_id.$order_number.$this->verify_key);
@@ -300,7 +300,7 @@ function wcmolpay_gateway_load() {
             
             return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form'>"
                     . implode('', $molpay_args_array)
-                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via MOLPay', 'woothemes') . "' /> "
+                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via Razer Merchant Services', 'woothemes') . "' /> "
                     . "<a class='button cancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
                     //. "<script>document.molpay_payment_form.submit();</script>"
                     . "</form>";
@@ -342,7 +342,7 @@ function wcmolpay_gateway_load() {
         }
 
         /**
-         * Check for MOLPay Response
+         * Check for Razer Merchant Services Response
          *
          * @access public
          * @return void
@@ -357,7 +357,7 @@ function wcmolpay_gateway_load() {
             } else if ( $_POST['nbcb']=='2' ) {
                 do_action ( "valid_molpay_request_notification", $_POST );
             } else {
-                wp_die( "MOLPay Request Failure" );
+                wp_die( "Razer Merchant Services Request Failure" );
             }
         }
         
@@ -438,7 +438,7 @@ function wcmolpay_gateway_load() {
          */
         public function merchant_id_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Merchant ID in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Merchant ID in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -449,7 +449,7 @@ function wcmolpay_gateway_load() {
          */
         public function verify_key_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Verify Key in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Verify Key in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -460,7 +460,7 @@ function wcmolpay_gateway_load() {
          */
         public function secret_key_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Secret Key in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Secret Key in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -471,7 +471,7 @@ function wcmolpay_gateway_load() {
          */
         public function account_type_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> Select account type in MOLPay. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> Select account type in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -486,7 +486,7 @@ function wcmolpay_gateway_load() {
          */
         public function inquiry_status($tranID, $amount, $domain) {
             $verify_key = $this->verify_key;
-            $requestUrl = $this->inquiry_url."MOLPay/q_by_tid.php";
+            $requestUrl = $this->inquiry_url."RMS/q_by_tid.php";
             $request_param = array(
                 "amount"    => number_format($amount,2),
                 "txID"      => intval($tranID),
@@ -519,7 +519,7 @@ function wcmolpay_gateway_load() {
         }
 
         /**
-         * Update Cart based on MOLPay status
+         * Update Cart based on Razer Merchant Services status
          * 
          * @global mixed $woocommerce
          * @param int $order_id
@@ -551,11 +551,11 @@ function wcmolpay_gateway_load() {
 
             $getStatus = $order->get_status();
             if(!in_array($getStatus,array('processing','completed'))) {
-                $order->add_order_note('MOLPay Payment Status: '.$M_status.'<br>Transaction ID: ' . $tranID . $referer);
+                $order->add_order_note('Razer Merchant Services Payment Status: '.$M_status.'<br>Transaction ID: ' . $tranID . $referer);
                 if ($MOLPay_status == "00") {
                     $order->payment_complete();
                 } else {
-                    $order->update_status($W_status, sprintf(__('Payment %s via MOLPay.', 'woocommerce'), $tranID ) );
+                    $order->update_status($W_status, sprintf(__('Payment %s via Razer Merchant Services.', 'woocommerce'), $tranID ) );
                 }
                 if ($this->payment_title == 'yes') {
                     $paytitle = $this->payment_titles[strtolower($channel)];
@@ -603,7 +603,7 @@ function wcmolpay_gateway_load() {
                     $postData[]= $k."=".$v;
                 }
                 $postdata = implode("&",$postData);
-                $url = $this->url."MOLPay/API/chkstat/returnipn.php";
+                $url = $this->url."RMS/API/chkstat/returnipn.php";
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_POST , 1 );
                 curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );

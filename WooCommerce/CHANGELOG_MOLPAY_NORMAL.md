@@ -1,4 +1,12 @@
-# Change log for WooCommerce MOLPay Normal Plugin
+# Change log for WooCommerce Razer Merchant Services Normal Plugin
+
+## v3.0.0 - Mar 13, 2020
+
+- Release version 3.0.0
+
+**Updates:**
+
+- Rebrand to Razer Merchant Services.
 
 ## v2.7.1 - Apr 18, 2019
 
