@@ -143,7 +143,7 @@ function wcmolpay_gateway_load() {
             // Transaction Type for Credit Channel
             $this->credit_tcctype = ($this->get_option('credit_tcctype')=='SALS' ? 'SALS' : 'AUTH');
 
-            $this->pay_url = $this->url.'RMS/pay/';
+            $this->pay_url = $this->url.'MOLPay/pay/';
 
             // Actions.
             add_action( 'valid_molpay_request_returnurl', array( &$this, 'check_molpay_response_returnurl' ) );
@@ -529,7 +529,7 @@ function wcmolpay_gateway_load() {
                     // . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via MOLPay', 'woothemes') . "' /> "
                     // . "<a class='buttoncancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
                     ."<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>"
-                    ."<script src='".$this->url."RMS/API/seamless/latest/js/MOLPay_seamless.deco.js'></script>"
+                    ."<script src='".$this->url."MOLPay/API/seamless/latest/js/MOLPay_seamless.deco.js'></script>"
                     ."<h3><u>Pay via</u>:</h3><img src='".plugins_url( 'images/logo_RazerMerchantServices.png', __FILE__ )."' width='200px'>"
                     ."<br/>"
                     .($this->credit ? "<button type='button' style='background:none; padding:0px' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->billing_phone."' data-mpstcctype='".$this->credit_tcctype."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->billing_email."' data-mpscountry='".$order->billing_country."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='credit' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->billing_first_name." ".$order->billing_last_name."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/credit.png', __FILE__ )."' width='100px' height='50px'/></button>" : '') 
@@ -651,7 +651,7 @@ function wcmolpay_gateway_load() {
                 $postData[]= $k."=".$v;
             }
             $postdata = implode("&",$postData);
-            $url = $this->url."RMS/API/chkstat/returnipn.php";
+            $url = $this->url."MOLPay/API/chkstat/returnipn.php";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_POST , 1 );
             curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
@@ -719,7 +719,7 @@ function wcmolpay_gateway_load() {
                 $postData[]= $k."=".$v;
             }
             $postdata = implode("&",$postData);
-            $url = $this->url."RMS/API/chkstat/returnipn.php";
+            $url = $this->url."MOLPay/API/chkstat/returnipn.php";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_POST , 1 );
             curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
@@ -833,7 +833,7 @@ function wcmolpay_gateway_load() {
          */
         public function inquiry_status($tranID, $amount, $domain) {
             $verify_key = $this->verify_key;
-            $requestUrl = $this->inquiry_url."RMS/q_by_tid.php";
+            $requestUrl = $this->inquiry_url."MOLPay/q_by_tid.php";
             $request_param = array(
                 "amount"    => number_format($amount,2),
                 "txID"      => intval($tranID),
