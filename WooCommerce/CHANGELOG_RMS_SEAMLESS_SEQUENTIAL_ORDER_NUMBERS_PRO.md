@@ -1,5 +1,13 @@
 # Change log for WooCommerce Razer Merchant Services Seamless Plugin for Sequential Order Numbers Pro
 
+## v3.0.1 - Apr 21, 2020
+
+- Release version 3.0.1
+
+**Updates:**
+
+- Minor improvement on payment UI.
+
 ## v3.0.0 - Mar 13, 2020
 
 - Release version 3.0.0
