@@ -3,7 +3,7 @@
  * Razer Merchant Services WooCommerce Shopping Cart Plugin
  * 
  * @author Razer Merchant Services Technical Team <technical-sa@razer.com>
- * @version 3.0.0
+ * @version 3.0.2
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
@@ -14,7 +14,7 @@
  * Description: WooCommerce Razer Merchant Services | The leading payment gateway in South East Asia Grow your business with Razer Merchant Services payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: Razer Merchant Services Tech Team
  * Author URI: https://merchant.razer.com/
- * Version: 3.0.1
+ * Version: 3.0.2
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
