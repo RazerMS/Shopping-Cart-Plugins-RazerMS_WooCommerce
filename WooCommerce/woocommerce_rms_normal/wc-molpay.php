@@ -3,7 +3,7 @@
  * Razer Merchant Services WooCommerce Shopping Cart Plugin
  * 
  * @author Razer Merchant Services Technical Team <technical-sa@razer.com>
- * @version 3.0.0
+ * @version 3.0.2
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
@@ -14,7 +14,7 @@
  * Description: WooCommerce Razer Merchant Services | The leading payment gateway in South East Asia Grow your business with Razer Merchant Services payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: Razer Merchant Services Tech Team
  * Author URI: https://merchant.razer.com/
- * Version: 3.0.0
+ * Version: 3.0.2
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
@@ -268,9 +268,9 @@ function wcmolpay_gateway_load() {
         public function generate_form( $order_id ) {
             $order = new WC_Order( $order_id ); 
             $pay_url = $this->url.'MOLPay/pay/'.$this->merchant_id;
-            $total = $order->order_total;
+            $total = $order->get_total();
             $order_number = $order->get_order_number();
-            $vcode = md5($order->order_total.$this->merchant_id.$order_number.$this->verify_key);
+            $vcode = md5($order->get_total().$this->merchant_id.$order_number.$this->verify_key);
             
             if ( sizeof( $order->get_items() ) > 0 ) 
                 foreach ( $order->get_items() as $item )
@@ -283,11 +283,11 @@ function wcmolpay_gateway_load() {
                 'vcode' => $vcode,
                 'orderid' => $order_number,
                 'amount' => $total,
-                'bill_name' => $order->billing_first_name." ".$order->billing_last_name,
-                'bill_mobile' => $order->billing_phone,
-                'bill_email' => $order->billing_email,
+                'bill_name' => $order->get_billing_first_name()." ".$order->get_billing_last_name(),
+                'bill_mobile' => $order->get_billing_phone(),
+                'bill_email' => $order->get_billing_email(),
                 'bill_desc' => $desc,
-                'country' => $order->billing_country,
+                'country' => $order->get_billing_country(),
                 'cur' => get_woocommerce_currency(),
                 'returnurl' => add_query_arg( 'wc-api', 'WC_Molpay_Gateway', home_url( '/' ) )
             );

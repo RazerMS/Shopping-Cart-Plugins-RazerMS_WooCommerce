@@ -1,5 +1,11 @@
 # Change log for WooCommerce Razer Merchant Services Normal Plugin
 
+## v3.0.2 - July 14, 2020
+
+**Bug Fix:**
+
+- Improper usage of WooCommerce Order Object.
+
 ## v3.0.0 - Mar 13, 2020
 
 - Release version 3.0.0
