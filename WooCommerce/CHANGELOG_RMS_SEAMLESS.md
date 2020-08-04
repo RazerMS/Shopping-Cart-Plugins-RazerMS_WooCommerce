@@ -1,5 +1,12 @@
 # Change log for WooCommerce Razer Merchant Services Seamless Plugin
 
+## v3.1.0 - Aug 4, 2020
+
+**Updates:**
+
+- Adding FPX B2B channel.
+- Adding Thailand channel.
+
 ## v3.0.2 - July 14, 2020
 
 **Bug Fix:**

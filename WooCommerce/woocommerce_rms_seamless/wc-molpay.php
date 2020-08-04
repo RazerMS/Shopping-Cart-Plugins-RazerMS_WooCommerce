@@ -3,7 +3,7 @@
  * Razer Merchant Services WooCommerce Shopping Cart Plugin
  * 
  * @author Razer Merchant Services Technical Team <technical-sa@razer.com>
- * @version 3.0.2
+ * @version 3.1.0
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
@@ -14,7 +14,7 @@
  * Description: WooCommerce Razer Merchant Services | The leading payment gateway in South East Asia Grow your business with Razer Merchant Services payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: Razer Merchant Services Tech Team
  * Author URI: https://merchant.razer.com/
- * Version: 3.0.2
+ * Version: 3.1.0
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
@@ -123,6 +123,28 @@ function wcmolpay_gateway_load() {
             $this->fpx_ocbc = ($this->get_option('fpx_ocbc')=='yes' ? true : false);
             $this->fpx_scb = ($this->get_option('fpx_scb')=='yes' ? true : false);
             $this->fpx_uob = ($this->get_option('fpx_uob')=='yes' ? true : false);
+            $this->FPX_M2E = ($this->get_option('FPX_M2E')=='yes' ? true : false);
+            $this->FPX_B2B_ABB = ($this->get_option('FPX_B2B_ABB')=='yes' ? true : false);
+            $this->FPX_B2B_ABBM = ($this->get_option('FPX_B2B_ABBM')=='yes' ? true : false);
+            $this->FPX_B2B_ABMB = ($this->get_option('FPX_B2B_ABMB')=='yes' ? true : false);
+            $this->FPX_B2B_AMB = ($this->get_option('FPX_B2B_AMB')=='yes' ? true : false);
+            $this->FPX_B2B_BIMB = ($this->get_option('FPX_B2B_BIMB')=='yes' ? true : false);
+            $this->FPX_B2B_BKRM = ($this->get_option('FPX_B2B_BKRM')=='yes' ? true : false);
+            $this->FPX_B2B_BMMB = ($this->get_option('FPX_B2B_BMMB')=='yes' ? true : false);
+            $this->FPX_B2B_BNP = ($this->get_option('FPX_B2B_BNP')=='yes' ? true : false);
+            $this->FPX_B2B_CIMB = ($this->get_option('FPX_B2B_CIMB')=='yes' ? true : false);
+            $this->FPX_B2B_CITIBANK = ($this->get_option('FPX_B2B_CITIBANK')=='yes' ? true : false);
+            $this->FPX_B2B_DEUTSCHE = ($this->get_option('FPX_B2B_DEUTSCHE')=='yes' ? true : false);
+            $this->FPX_B2B_HLB = ($this->get_option('FPX_B2B_HLB')=='yes' ? true : false);
+            $this->FPX_B2B_HSBC = ($this->get_option('FPX_B2B_HSBC')=='yes' ? true : false);
+            $this->FPX_B2B_KFH = ($this->get_option('FPX_B2B_KFH')=='yes' ? true : false);
+            $this->FPX_B2B_OCBC = ($this->get_option('FPX_B2B_OCBC')=='yes' ? true : false);
+            $this->FPX_B2B_PBB = ($this->get_option('FPX_B2B_PBB')=='yes' ? true : false);
+            $this->FPX_B2B_PBBE = ($this->get_option('FPX_B2B_PBBE')=='yes' ? true : false);
+            $this->FPX_B2B_RHB = ($this->get_option('FPX_B2B_RHB')=='yes' ? true : false);
+            $this->FPX_B2B_SCB = ($this->get_option('FPX_B2B_SCB')=='yes' ? true : false);
+            $this->FPX_B2B_UOB = ($this->get_option('FPX_B2B_UOB')=='yes' ? true : false);
+            $this->FPX_B2B_UOBR = ($this->get_option('FPX_B2B_UOBR')=='yes' ? true : false);
             $this->Point_BCard = ($this->get_option('Point-BCard')=='yes' ? true : false);
             $this->dragonpay = ($this->get_option('dragonpay')=='yes' ? true : false);
             $this->NGANLUONG = ($this->get_option('NGANLUONG')=='yes' ? true : false);
@@ -140,7 +162,14 @@ function wcmolpay_gateway_load() {
             $this->RazerPay = ($this->get_option('RazerPay')=='yes' ? true : false);
             $this->TNG_EWALLET = ($this->get_option('TNG-EWALLET')=='yes' ? true : false);
             $this->GrabPay = ($this->get_option('GrabPay')=='yes' ? true : false);
-            
+            $this->BAY_IB_U = ($this->get_option('BAY_IB_U')=='yes' ? true : false);
+            $this->BBL_IB_U = ($this->get_option('BBL_IB_U')=='yes' ? true : false);
+            $this->KBANK_PayPlus = ($this->get_option('KBANK_PayPlus')=='yes' ? true : false);
+            $this->KTB_IB_U = ($this->get_option('KTB_IB_U')=='yes' ? true : false);
+            $this->SCB_IB_U = ($this->get_option('SCB_IB_U')=='yes' ? true : false);
+            $this->BigC = ($this->get_option('BigC')=='yes' ? true : false);
+            $this->OMISE_TL = ($this->get_option('OMISE_TL')=='yes' ? true : false);
+
             // Transaction Type for Credit Channel
             $this->credit_tcctype = ($this->get_option('credit_tcctype')=='SALS' ? 'SALS' : 'AUTH');
 
@@ -384,6 +413,138 @@ function wcmolpay_gateway_load() {
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
+                'FPX_M2E' => array(
+                    'title' => __('FPX Maybank2e', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_ABB' => array(
+                    'title' => __('FPX B2B Affin Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_ABBM' => array(
+                    'title' => __('FPX B2B AffinMax', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_ABMB' => array(
+                    'title' => __('FPX B2B Alliance Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_AMB' => array(
+                    'title' => __('FPX B2B AmBank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_BIMB' => array(
+                    'title' => __('FPX B2B Bank Islam Malaysia Berhad', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_BKRM' => array(
+                    'title' => __('FPX B2B i-bizRAKYAT', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_BMMB' => array(
+                    'title' => __('FPX B2B Bank Muamalat', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_BNP' => array(
+                    'title' => __('FPX B2B BNP Paribas', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_CIMB' => array(
+                    'title' => __('FPX B2B BizChannel@CIMB', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_CITIBANK' => array(
+                    'title' => __('FPX B2B CITIBANK', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_DEUTSCHE' => array(
+                    'title' => __('FPX B2B Deutsche Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_HLB' => array(
+                    'title' => __('FPX B2B Hong Leong Connect', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_HSBC' => array(
+                    'title' => __('FPX B2B HSBC', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_KFH' => array(
+                    'title' => __('FPX B2B Kuwait Finance House Overseas Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_OCBC' => array(
+                    'title' => __('FPX B2B OCBC Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_PBB' => array(
+                    'title' => __('FPX B2B Public Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_PBBE' => array(
+                    'title' => __('FPX B2B Public Bank Enterprise', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_RHB' => array(
+                    'title' => __('FPX B2B RHB Reflex', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_SCB' => array(
+                    'title' => __('FPX B2B Standard Chartered Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_UOB' => array(
+                    'title' => __('FPX B2B United Overseas Bank', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
+                'FPX_B2B_UOBR' => array(
+                    'title' => __('FPX B2B UOB Regional', 'wcmolpay'),
+                    'type'  => 'checkbox',
+                    'label' => __(' ', 'wcmolpay'),
+                    'default' => 'no'
+                ),
                 'Point-BCard' => array(
                     'title' => __( 'Point-BCard', 'wcmolpay' ),
                     'type' => 'checkbox',
@@ -482,6 +643,48 @@ function wcmolpay_gateway_load() {
                 ),
                 'GrabPay' => array(
                     'title' => __( 'Grab Pay', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'BAY_IB_U' => array(
+                    'title' => __( 'Bank of Ayudhya (Krungsri)', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'BBL_IB_U' => array(
+                    'title' => __( 'Bangkok Bank (Fee on user)', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'KBANK_PayPlus' => array(
+                    'title' => __( 'Kasikornbank K PLUS', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'KTB_IB_U' => array(
+                    'title' => __( 'Krung Thai Bank (Fee on user)', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'SCB_IB_U' => array(
+                    'title' => __( 'Siam Commercial Bank (Fee on user)', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'BigC' => array(
+                    'title' => __( 'BigC', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
+                'OMISE_TL' => array(
+                    'title' => __( 'Tesco Lotus via OMISE', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
@@ -586,6 +789,35 @@ function wcmolpay_gateway_load() {
                     .($this->RazerPay ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='RazerPay' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/razerpay.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
                     .($this->TNG_EWALLET ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='TNG-EWALLET' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/touchngo_ewallet.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
                     .($this->GrabPay ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='GrabPay' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/grabpay.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->BAY_IB_U ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='BAY_IB_U' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BAY_IB_U.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->BBL_IB_U ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='BBL_IB_U' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BBL_IB_U.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->KBANK_PayPlus ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='KBANK_PayPlus' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/KBANK_PayPlus.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->KTB_IB_U ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='KTB_IB_U' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/KTB_IB_U.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->SCB_IB_U ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='SCB_IB_U' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/SCB_IB_U.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->BigC ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='BigC' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BigC.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->OMISE_TL ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='OMISE_TL' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/OMISE_TL.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->FPX_M2E ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_M2E' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_M2E.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_ABB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_ABB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_ABB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_ABBM ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_ABBM' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_ABBM.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_ABMB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_ABMB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_ABMB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_AMB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_AMB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_AMB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_BIMB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_BIMB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_BIMB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_BKRM ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_BKRM' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_BKRM.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_BMMB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_BMMB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_BMMB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_BNP ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_BNP' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_BNP.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_CIMB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_CIMB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_CIMB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_CITIBANK ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_CITIBANK' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_CITIBANK.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_DEUTSCHE ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_DEUTSCHE' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_DEUTSCHE.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_HLB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_HLB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_HLB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_HSBC ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_HSBC' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_HSBC.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_KFH ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_KFH' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_KFH.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_OCBC ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_OCBC' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_OCBC.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_PBB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_PBB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_PBB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_PBBE ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_PBBE' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_PBBE.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_RHB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_RHB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_RHB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_SCB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_SCB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_SCB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_UOB ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_UOB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_UOB.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->FPX_B2B_UOBR ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='FPX_B2B_UOBR' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/FPX_B2B_UOBR.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
                     . "</form>";
         }
 
