@@ -160,6 +160,7 @@ function wcmolpay_gateway_load() {
             $this->BOOST = ($this->get_option('BOOST')=='yes' ? true : false);
             $this->MB2U_QRPay_Push = ($this->get_option('MB2U_QRPay-Push')=='yes' ? true : false);
             $this->RazerPay = ($this->get_option('RazerPay')=='yes' ? true : false);
+            $this->ShopeePay = ($this->get_option('ShopeePay')=='yes' ? true : false);
             $this->TNG_EWALLET = ($this->get_option('TNG-EWALLET')=='yes' ? true : false);
             $this->GrabPay = ($this->get_option('GrabPay')=='yes' ? true : false);
             $this->BAY_IB_U = ($this->get_option('BAY_IB_U')=='yes' ? true : false);
@@ -635,6 +636,12 @@ function wcmolpay_gateway_load() {
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'
                 ),
+                'ShopeePay' => array(
+                    'title' => __( 'Shopee Pay', 'wcmolpay' ),
+                    'type' => 'checkbox',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'no'
+                ),
                 'TNG-EWALLET' => array(
                     'title' => __( 'Touch `n Go eWallet', 'wcmolpay' ),
                     'type' => 'checkbox',
@@ -702,7 +709,17 @@ function wcmolpay_gateway_load() {
                     'options' => array(
                         'SALS'  => __('SALS', 'wcmolpay' ),
                         'AUTH' => __( 'AUTH', 'wcmolpay' )
+                    ),
+                's' => array(
+                    'title' => __( 'Credit Card/ Debit Card', 'wcmolpay' ),
+                    'type' => 'select',
+                    'label' => __( ' ', 'wcmolpay' ),
+                    'default' => 'SALS',
+                    'options' => array(
+                        'SALS'  => __('SALS', 'wcmolpay' ),
+                        'AUTH' => __( 'AUTH', 'wcmolpay' )
                         )
+                )
                 )
             );
         }
@@ -751,7 +768,7 @@ function wcmolpay_gateway_load() {
             return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form'>"
                     . implode('', $molpay_args_array)
                     ."<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>"
-                    ."<script src='".$this->url."MOLPay/API/seamless/latest/js/MOLPay_seamless.deco.js'></script>"
+                    ."<script src='".$this->url."MOLPay/API/seamless/3.28/js/MOLPay_seamless.deco.js'></script>"
                     ."<h3><u>Pay via</u>:</h3><img src='".plugins_url( 'images/logo_RazerMerchantServices.png', __FILE__ )."' width='200px'>"
                     ."<br/>"
                     .($this->credit ? "<button type='button' style='background:none; padding:0px' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpstcctype='".$this->credit_tcctype."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='credit' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/credit.png', __FILE__ )."' width='100px' height='50px'/></button>" : '') 
@@ -787,6 +804,7 @@ function wcmolpay_gateway_load() {
                     .($this->BOOST ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='BOOST' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/boost.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
                     .($this->MB2U_QRPay_Push ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='MB2U_QRPay-Push' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/maybankQR.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
                     .($this->RazerPay ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='RazerPay' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/razerpay.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
+                    .($this->ShopeePay ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='ShopeePay' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/shopeepay_2.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
                     .($this->TNG_EWALLET ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='TNG-EWALLET' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/touchngo_ewallet.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
                     .($this->GrabPay ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='GrabPay' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/grabpay.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
                     .($this->BAY_IB_U ? "<button type='button' style='background:none; padding:0px;' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='BAY_IB_U' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BAY_IB_U.png', __FILE__ )."' width='100px' height='50px'/></button>" : '')
