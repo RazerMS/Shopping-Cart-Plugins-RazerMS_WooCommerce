@@ -1,5 +1,11 @@
 # Change log for WooCommerce Razer Merchant Services Seamless Plugin
 
+## v5.3.0 - May 24, 2021
+
+**Updates:**
+
+- Adding ShopeePay channel.  
+
 ## v3.1.0 - Aug 4, 2020
 
 **Updates:**
