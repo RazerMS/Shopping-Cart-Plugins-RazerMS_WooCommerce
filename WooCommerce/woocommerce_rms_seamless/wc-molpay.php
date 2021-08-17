@@ -1116,7 +1116,7 @@ function wcmolpay_gateway_load() {
                     $WCOrderId = wc_seq_order_number_pro()->find_order_by_order_number( $orderid );
                     break;
                 case '3' : 
-                    $WCOrderId = substr($orderid,0,-6);
+                    $WCOrderId = substr($orderid,0,-6);  
                     break;
                 case '0' : 
                 default :
