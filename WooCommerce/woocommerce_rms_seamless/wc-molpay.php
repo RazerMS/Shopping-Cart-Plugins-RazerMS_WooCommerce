@@ -246,7 +246,8 @@ function wcmolpay_gateway_load() {
                     'options' => array(
                         '0' => __( 'Not install any ordering plugin', 'wcmolpay'),
                         '1' => __( 'Sequential Order Numbers', 'wcmolpay' ),
-                        '2' => __( 'Sequential Order Numbers Pro', 'wcmolpay' )
+                        '2' => __( 'Sequential Order Numbers Pro', 'wcmolpay' ),
+                        '3' => __( 'Advanced Order Numbers', 'wcmolpay' )
                     ),
                     'description' => __( 'Please select correct ordering plugin as it will affect your order result!!', 'wcmolpay' ),
                     'desc_tip' => true,
@@ -1113,6 +1114,9 @@ function wcmolpay_gateway_load() {
                     break;
                 case '2' : 
                     $WCOrderId = wc_seq_order_number_pro()->find_order_by_order_number( $orderid );
+                    break;
+                case '3' : 
+                    $WCOrderId = substr($orderid,0,-6);
                     break;
                 case '0' : 
                 default :
