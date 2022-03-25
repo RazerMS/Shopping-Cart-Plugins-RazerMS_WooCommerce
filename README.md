@@ -31,7 +31,6 @@ Changelog
 
 [Woocommerce RMS Seamless](https://github.com/RazerMS/Shopping-Cart-Plugins-RazerMS_WooCommerce/tree/master/WooCommerce/woocommerce_rms_seamless) v5.3.0 - May 24, 2021
 
-Submit issue to this repository or email to our support-sa@razer.com
 
 Contribution
 ------------
