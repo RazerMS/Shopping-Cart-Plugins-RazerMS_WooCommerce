@@ -5,7 +5,12 @@
 
 Razer Merchant Services Plugin for Wordpress developed by RMS technical team.
 
-Notes
+Introduction
+-----
+
+This is Razer Merchant Services Woocommerce Plugin for Wordpress and ClassicPress Plugin for eCommerce. WooCommerce is an ecommerce plugin for WordPress. It makes creating and managing an online store simple, with reasonable levels of flexibility and several vital features such as inventory and tax management, secure payments and shipping integration
+
+Notes / Prerequisite
 -----
 
 Razer Merchant Services is not responsible for any problems that might arise from the use of this module. 
@@ -13,13 +18,20 @@ Use at your own risk. Please backup any critical data before proceeding. For any
 assistance, please email support-sa@razer.com.
 
 
-Installations for Wordpress Plugin 
+Installations Guidance for Wordpress Plugin 
 -----------------------------
 [ClassiPress Version	3.2.1](https://github.com/RazerMS/WordPress_WooCommerce_WP-eCommerce_ClassiPress/wiki/Installation-for-Classipress-Plugins)
 
 [WooCommerce](https://github.com/RazerMS/WordPress_WooCommerce_WP-eCommerce_ClassiPress/wiki/Installation-for-WooCommerce-Plugins)
 
 [WP-eCommerce Version 3.9.x](https://github.com/RazerMS/WordPress_WooCommerce_WP-eCommerce_ClassiPress/wiki/Installation-for-WP-e-Commerce-Plugins)
+
+Changelog
+------------
+
+[Woocommerce RMS Seamless](https://github.com/RazerMS/Shopping-Cart-Plugins-RazerMS_WooCommerce/tree/master/WooCommerce/woocommerce_rms_seamless) v5.3.0 - May 24, 2021
+
+Submit issue to this repository or email to our support-sa@razer.com
 
 Contribution
 ------------
@@ -33,7 +45,7 @@ Issues
 Submit issue to this repository or email to our support-sa@razer.com
 
 
-Support
+Contact Support
 -------
 
 Merchant Technical Support / Customer Care : support-sa@razer.com <br>
