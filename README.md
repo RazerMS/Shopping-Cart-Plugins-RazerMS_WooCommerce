@@ -29,7 +29,7 @@ Installations Guidance for Wordpress Plugin
 Changelog
 ------------
 
-[Woocommerce RMS Seamless](https://github.com/RazerMS/Shopping-Cart-Plugins-RazerMS_WooCommerce/tree/master/WooCommerce/woocommerce_rms_seamless) v5.3.0 - May 24, 2021
+[Woocommerce RMS Seamless](https://github.com/RazerMS/Shopping-Cart-Plugins-RazerMS_WooCommerce/tree/master/WooCommerce/woocommerce_rms_seamless) v5.3.1 - Sep 7, 2021
 
 
 Contribution
