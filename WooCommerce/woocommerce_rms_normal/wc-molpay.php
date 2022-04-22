@@ -298,8 +298,13 @@ function wcmolpay_gateway_load() {
                 $molpay_args_array[] = "<input type='hidden' name='".$key."' value='". $value ."' />";
             }
             
-            return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form'>"
+            return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form' 
+                     onsubmit='if(document.getElementById(\"agree\").checked) { return true; } else { alert(\"Please indicate that you have read and agree to the Terms & Conditions, Refund Policy and Privacy Policy\"); return false; }'>"
                     . implode('', $molpay_args_array)
+                    ."<br/>"
+                    ." <input type='checkbox' name='checkbox' value='check' id='agree' /> I have read and agree to the <b> Terms & Conditions, Refund Policy</b> and <b>Privacy Policy</b>."
+                    ."<br/>"
+                    ."<br/>"
                     . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via Razer Merchant Services', 'woothemes') . "' /> "
                     . "<a class='button cancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
                     //. "<script>document.molpay_payment_form.submit();</script>"
