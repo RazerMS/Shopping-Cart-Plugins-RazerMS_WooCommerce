@@ -24,7 +24,6 @@ Installations Guidance for Wordpress Plugin
 
 [WooCommerce](https://github.com/RazerMS/WordPress_WooCommerce_WP-eCommerce_ClassiPress/wiki/Installation-for-WooCommerce-Plugins)
 
-[WP-eCommerce Version 3.9.x](https://github.com/RazerMS/WordPress_WooCommerce_WP-eCommerce_ClassiPress/wiki/Installation-for-WP-e-Commerce-Plugins)
 
 Changelog
 ------------
