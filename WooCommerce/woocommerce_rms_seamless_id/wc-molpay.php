@@ -259,13 +259,6 @@ function wcmolpay_gateway_load() {
                     'type'          => 'title',
                     'description'   => '',
                 ),
-                'CIMB Niaga' => array(
-                    'title' => __( 'CIMB Niaga', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'
-                
-                ),                
                 'e2Pay_DANA' => array(
                     'title' => __( 'DANA', 'wcmolpay' ),
                     'type' => 'checkbox',
