@@ -104,25 +104,7 @@ function wcmolpay_gateway_load() {
             $this->url = ($this->get_option('account_type')=='1') ? "https://pg.e2pay.co.id/" : "https://pg-uat.e2pay.co.id/" ;
             $this->inquiry_url = ($this->get_option('account_type')=='1') ? "https://api.e2pay.co.id/" : "https://api-uat.e2pay.co.id/" ;
             
-            // Define channel setting variables
-            $this->DK_PERMATA_VA = ($this->get_option('DK_PERMATA_VA')=='yes' ? true : false);
-            $this->DK_ALFA = ($this->get_option('DK_ALFA')=='yes' ? true : false);
-            $this->DK_Indomaret = ($this->get_option('DK_Indomaret')=='yes' ? true : false);
-            $this->DK_Danamon_VA = ($this->get_option('DK_Danamon_VA')=='yes' ? true : false);
-            $this->DK_Mandiri_VA = ($this->get_option('DK_Mandiri_VA')=='yes' ? true : false);
-            $this->DK_CIMBNiaga_VA = ($this->get_option('DK_CIMBNiaga_VA')=='yes' ? true : false);
-            $this->DK_BCA_VA = ($this->get_option('DK_BCA_VA')=='yes' ? true : false);
-            $this->DK_BRI_VA = ($this->get_option('DK_BRI_VA')=='yes' ? true : false);
-            $this->DK_BNI_VA = ($this->get_option('DK_BNI_VA')=='yes' ? true : false);
-            $this->DK_Maybank_VA = ($this->get_option('DK_Maybank_VA')=='yes' ? true : false);
-            $this->DK_Artajasa_VA = ($this->get_option('DK_Artajasa_VA')=='yes' ? true : false);
-            $this->DK_BRI_IB = ($this->get_option('DK_BRI_IB')=='yes' ? true : false);
-            $this->DK_BCA_IB = ($this->get_option('DK_BCA_IB')=='yes' ? true : false);
-            $this->DK_Danamon_IB = ($this->get_option('DK_Danamon_IB')=='yes' ? true : false);
-            $this->DK_CIMBClicks_IB = ($this->get_option('DK_CIMBClicks_IB')=='yes' ? true : false);
-            $this->DK_PermataNet_IB = ($this->get_option('DK_PermataNet_IB')=='yes' ? true : false);
-            $this->DK_Muamalat_IB = ($this->get_option('DK_Muamalat_IB')=='yes' ? true : false);
-            $this->DK_Kredivo_IB = ($this->get_option('DK_Kredivo_IB')=='yes' ? true : false);
+            // Define channel setting variables            
             $this->e2Pay_DANA = ($this->get_option('e2Pay_DANA')=='yes' ? true : false);
             $this->e2Pay_LINKAJA = ($this->get_option('e2Pay_LINKAJA')=='yes' ? true : false);
             $this->e2Pay_CIMB_OCTO_MOBILE = ($this->get_option('e2Pay_CIMB_OCTO_MOBILE')=='yes' ? true : false);
