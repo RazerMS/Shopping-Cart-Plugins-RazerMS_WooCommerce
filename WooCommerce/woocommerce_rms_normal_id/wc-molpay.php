@@ -264,9 +264,6 @@ function wcmolpay_gateway_load() {
             $order = new WC_Order( $order_id ); 
             $pay_url = $this->url.'MOLPay/pay/'.$this->merchant_id;
             
-            var_dump($pay_url);
-            // die;
-
             $total = $order->get_total();
             $order_number = $order->get_order_number();
             $vcode = md5($order->get_total().$this->merchant_id.$order_number.$this->verify_key);
@@ -297,10 +294,6 @@ function wcmolpay_gateway_load() {
                 $molpay_args_array[] = "<input type='hidden' name='".$key."' value='". $value ."' />";
             }
 
-            echo "<pre>";
-            print_r($molpay_args_array);
-            die();
-            
             return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form' 
                      onsubmit='if(document.getElementById(\"agree\").checked) { return true; } else { alert(\"Please indicate that you have read and agree to the Terms & Conditions, Refund Policy and Privacy Policy\"); return false; }'>"
                     . implode('', $molpay_args_array)
