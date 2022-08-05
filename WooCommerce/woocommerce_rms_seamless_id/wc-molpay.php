@@ -104,25 +104,7 @@ function wcmolpay_gateway_load() {
             $this->url = ($this->get_option('account_type')=='1') ? "https://pg.e2pay.co.id/" : "https://pg-uat.e2pay.co.id/" ;
             $this->inquiry_url = ($this->get_option('account_type')=='1') ? "https://api.e2pay.co.id/" : "https://api-uat.e2pay.co.id/" ;
             
-            // Define channel setting variables
-            $this->DK_PERMATA_VA = ($this->get_option('DK_PERMATA_VA')=='yes' ? true : false);
-            $this->DK_ALFA = ($this->get_option('DK_ALFA')=='yes' ? true : false);
-            $this->DK_Indomaret = ($this->get_option('DK_Indomaret')=='yes' ? true : false);
-            $this->DK_Danamon_VA = ($this->get_option('DK_Danamon_VA')=='yes' ? true : false);
-            $this->DK_Mandiri_VA = ($this->get_option('DK_Mandiri_VA')=='yes' ? true : false);
-            $this->DK_CIMBNiaga_VA = ($this->get_option('DK_CIMBNiaga_VA')=='yes' ? true : false);
-            $this->DK_BCA_VA = ($this->get_option('DK_BCA_VA')=='yes' ? true : false);
-            $this->DK_BRI_VA = ($this->get_option('DK_BRI_VA')=='yes' ? true : false);
-            $this->DK_BNI_VA = ($this->get_option('DK_BNI_VA')=='yes' ? true : false);
-            $this->DK_Maybank_VA = ($this->get_option('DK_Maybank_VA')=='yes' ? true : false);
-            $this->DK_Artajasa_VA = ($this->get_option('DK_Artajasa_VA')=='yes' ? true : false);
-            $this->DK_BRI_IB = ($this->get_option('DK_BRI_IB')=='yes' ? true : false);
-            $this->DK_BCA_IB = ($this->get_option('DK_BCA_IB')=='yes' ? true : false);
-            $this->DK_Danamon_IB = ($this->get_option('DK_Danamon_IB')=='yes' ? true : false);
-            $this->DK_CIMBClicks_IB = ($this->get_option('DK_CIMBClicks_IB')=='yes' ? true : false);
-            $this->DK_PermataNet_IB = ($this->get_option('DK_PermataNet_IB')=='yes' ? true : false);
-            $this->DK_Muamalat_IB = ($this->get_option('DK_Muamalat_IB')=='yes' ? true : false);
-            $this->DK_Kredivo_IB = ($this->get_option('DK_Kredivo_IB')=='yes' ? true : false);
+            // Define channel setting variables            
             $this->e2Pay_DANA = ($this->get_option('e2Pay_DANA')=='yes' ? true : false);
             $this->e2Pay_LINKAJA = ($this->get_option('e2Pay_LINKAJA')=='yes' ? true : false);
             $this->e2Pay_CIMB_OCTO_MOBILE = ($this->get_option('e2Pay_CIMB_OCTO_MOBILE')=='yes' ? true : false);
@@ -276,121 +258,6 @@ function wcmolpay_gateway_load() {
                     'title'         => 'Channel to be Enabled',
                     'type'          => 'title',
                     'description'   => '',
-                ),
-                'CIMB Niaga' => array(
-                    'title' => __( 'CIMB Niaga', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'
-                
-                ),
-                'DK_PERMATA_VA' => array(
-                    'title' => __( 'DOKU PERMATA VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_ALFA' => array(
-                    'title' => __( 'DOKU ALFA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Indomaret' => array(
-                    'title' => __( 'DOKU Indomaret', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Danamon_VA' => array(
-                    'title' => __( 'DOKU Danamon VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Mandiri_VA' => array(
-                    'title' => __( 'DOKU Mandiri VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_CIMBNiaga_VA' => array(
-                    'title' => __( 'DOKU CIMBNiaga VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_BCA_VA' => array(
-                    'title' => __( 'DOKU BCA VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_BRI_VA' => array(
-                    'title' => __( 'DOKU BRI VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_BNI_VA' => array(
-                    'title' => __( 'DOKU BNI VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Maybank_VA' => array(
-                    'title' => __( 'DOKU Maybank VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Artajasa_VA' => array(
-                    'title' => __( 'DOKU Artajasa VA', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_BRI_IB' => array(
-                    'title' => __( 'DOKU BRI IB', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_BCA_IB' => array(
-                    'title' => __( 'DOKU BCA IB', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Danamon_IB' => array(
-                    'title' => __( 'DOKU Danamon IB', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_CIMBClicks_IB' => array(
-                    'title' => __( 'DOKU CIMBClicks IB', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_PermataNet_IB' => array(
-                    'title' => __( 'DOKU PermataNet IB', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Muamalat_IB' => array(
-                    'title' => __( 'DOKU Muamalat IB', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
-                ),
-                'DK_Kredivo_IB' => array(
-                    'title' => __( 'DOKU Kredivo IB', 'wcmolpay' ),
-                    'type' => 'checkbox',
-                    'label' => __( ' ', 'wcmolpay' ),
-                    'default' => 'no'                
                 ),
                 'e2Pay_DANA' => array(
                     'title' => __( 'DANA', 'wcmolpay' ),
@@ -566,25 +433,7 @@ function wcmolpay_gateway_load() {
                     ."<br/>"
                     ." <input type='checkbox' name='checkbox' value='check' id='agree' /> I have read and agree to the <b> Terms & Conditions, Refund Policy</b> and <b>Privacy Policy</b>."
                     ."<br/>"
-                    ."<br/>"
-                    .($this->DK_PERMATA_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_PERMATA_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/Pemata.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_ALFA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_ALFA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/ALFA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Indomaret ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Indomaret' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/Indomaret.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Danamon_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Danamon_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/danamon.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Mandiri_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Mandiri_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/mandiri.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_CIMBNiaga_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_CIMBNiaga_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/CIMBNiaga.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_BCA_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_BCA_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BCA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_BRI_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_BRI_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BRI.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_BNI_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_BNI_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BNI.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Maybank_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Maybank_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/doku_maybank.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Artajasa_VA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Artajasa_VA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/Artajasa.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_BRI_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_BRI_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BRI.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_BCA_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_BCA_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/BCA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Danamon_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Danamon_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/danamon.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_CIMBClicks_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_CIMBClicks_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/CIMBClicks.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_PermataNet_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_PermataNet_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/Permata.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Muamalat_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Muamalat_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/muamalat.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->DK_Kredivo_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='DK_Kredivo_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/kredivo.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    ."<br/>"                    
                     .($this->e2Pay_DANA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_DANA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/DANA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
                     .($this->e2Pay_LINKAJA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_LINKAJA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/LINKAJA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
                     .($this->e2Pay_CIMB_OCTO_MOBILE ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_CIMB_OCTO_MOBILE' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/CIMBOctoClicks.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')

@@ -131,24 +131,6 @@ function wcmolpay_gateway_load() {
             // Create list of Payment title of the channel
             $this->payment_titles = array(
                 // 'credit21'            => 'Credit Card/ Debit Card',
-                'DK_PERMATA_VA'                 => "DK_PERMATA_VA",
-                'DK_ALFA'                       => "DK_ALFA",
-                'DK_Indomaret'                  => "DK_Indomaret",
-                'DK_Danamon_VA'                 => "DK_Danamon_VA",
-                'DK_Mandiri_VA'                 => "DK_Mandiri_VA",
-                'DK_CIMBNiaga_VA'               => "DK_CIMBNiaga_VA",
-                'DK_BCA_VA'                     => "DK_BCA_VA",
-                'DK_BRI_VA'                     => "DK_BRI_VA",
-                'DK_BNI_VA'                     => "DK_BNI_VA",
-                'DK_Maybank_VA'                 => "DK_Maybank_VA",
-                'DK_Artajasa_VA'                => "DK_Artajasa_VA",
-                'DK_BRI_IB'                     => "DK_BRI_IB",
-                'DK_BCA_IB'                     => "DK_BCA_IB",
-                'DK_Danamon_IB'                 => "DK_Danamon_IB",
-                'DK_CIMBClicks_IB'              => "DK_CIMBClicks_IB",
-                'DK_PermataNet_IB'              => "DK_PermataNet_IB",
-                'DK_Muamalat_IB'                => "DK_Muamalat_IB",
-                'DK_Kredivo_IB'                 => "DK_Kredivo_IB",
                 'e2Pay_DANA'                    => "e2Pay_DANA",
                 'e2Pay_LINKAJA'                 => "e2Pay_LINKAJA",
                 'e2Pay_CIMB_OCTO_MOBILE'        => "e2Pay_CIMB_OCTO_MOBILE",
@@ -282,9 +264,6 @@ function wcmolpay_gateway_load() {
             $order = new WC_Order( $order_id ); 
             $pay_url = $this->url.'MOLPay/pay/'.$this->merchant_id;
             
-            var_dump($pay_url);
-            // die;
-
             $total = $order->get_total();
             $order_number = $order->get_order_number();
             $vcode = md5($order->get_total().$this->merchant_id.$order_number.$this->verify_key);
@@ -315,10 +294,6 @@ function wcmolpay_gateway_load() {
                 $molpay_args_array[] = "<input type='hidden' name='".$key."' value='". $value ."' />";
             }
 
-            echo "<pre>";
-            print_r($molpay_args_array);
-            die();
-            
             return "<form action='".$pay_url."/' method='post' id='molpay_payment_form' name='molpay_payment_form' 
                      onsubmit='if(document.getElementById(\"agree\").checked) { return true; } else { alert(\"Please indicate that you have read and agree to the Terms & Conditions, Refund Policy and Privacy Policy\"); return false; }'>"
                     . implode('', $molpay_args_array)
