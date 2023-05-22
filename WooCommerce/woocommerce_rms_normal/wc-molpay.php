@@ -3,7 +3,7 @@
  * Razer Merchant Services WooCommerce Shopping Cart Plugin
  * 
  * @author Razer Merchant Services Technical Team <technical-sa@razer.com>
- * @version 3.0.2
+ * @version 3.0.3
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
@@ -14,7 +14,7 @@
  * Description: WooCommerce Razer Merchant Services | The leading payment gateway in South East Asia Grow your business with Razer Merchant Services payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
  * Author: Razer Merchant Services Tech Team
  * Author URI: https://merchant.razer.com/
- * Version: 3.0.2
+ * Version: 3.0.3
  * License: MIT
  * Text Domain: wcmolpay
  * Domain Path: /languages/
@@ -554,6 +554,29 @@ function wcmolpay_gateway_load() {
                     break;
             }
 
+            $channel_mappings = array(
+                'maybank2u' => 'fpx_mb2u',
+                'cimb' => 'fpx_cimbclicks',
+                'hlb' => 'fpx_hlb',
+                'rhb' => 'fpx_rhb',
+                'amb' => 'fpx_amb',
+                'publicbank' => 'fpx_pbb',
+                'abb' => 'fpx_abb',
+                'bankislam' => 'fpx_bimb',
+                'alliancebank' => 'fpx_abmb',
+                'bkrm' => 'fpx_bkrm',
+                'bsn' => 'fpx_bsn',
+                'hsbc' => 'fpx_hsbc',
+                'kuwait-finace' => 'fpx_kfh',
+                'ocbc' => 'fpx_ocbc',
+                'scb' => 'fpx_scb',
+                'uob' => 'fpx_uob'
+            );
+
+            if (isset($channel_mappings[$channel])) {
+                $channel = $channel_mappings[$channel];
+            }
+
             $getStatus = $order->get_status();
             if(!in_array($getStatus,array('processing','completed'))) {
                 $order->add_order_note('Razer Merchant Services Payment Status: '.$M_status.'<br>Transaction ID: ' . $tranID . $referer);
@@ -641,7 +664,7 @@ function wcmolpay_gateway_load() {
             $appcode = $response['appcode'];
             $paydate = $response['paydate'];
             $skey = $response['skey'];
-            $vkey = $this->secret_key;
+            $vkey = $this->verify_key;
             
             $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
             $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
