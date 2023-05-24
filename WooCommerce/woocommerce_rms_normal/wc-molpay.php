@@ -305,7 +305,7 @@ function wcmolpay_gateway_load() {
                     ." <input type='checkbox' name='checkbox' value='check' id='agree' /> I have read and agree to the <b> Terms & Conditions, Refund Policy</b> and <b>Privacy Policy</b>."
                     ."<br/>"
                     ."<br/>"
-                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via Razer Merchant Services', 'woothemes') . "' /> "
+                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Proceed', 'woothemes') . "' /> "
                     . "<a class='button cancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
                     //. "<script>document.molpay_payment_form.submit();</script>"
                     . "</form>";
