@@ -106,9 +106,9 @@ function wcmolpay_gateway_load() {
             
             // Define channel setting variables            
             $this->e2Pay_DANA = ($this->get_option('e2Pay_DANA')=='yes' ? true : false);
-            $this->e2Pay_LINKAJA = ($this->get_option('e2Pay_LINKAJA')=='yes' ? true : false);
+            $this->e2Pay_LINKAJA_APPLINK = ($this->get_option('e2Pay_LINKAJA_APPLINK')=='yes' ? true : false);
             $this->e2Pay_CIMB_OCTO_MOBILE = ($this->get_option('e2Pay_CIMB_OCTO_MOBILE')=='yes' ? true : false);
-            $this->e2Pay_SHOPEEPAY = ($this->get_option('e2Pay_SHOPEEPAY')=='yes' ? true : false);
+            $this->e2Pay_SHOPEEPAY_JUMPAPP = ($this->get_option('e2Pay_SHOPEEPAY_JUMPAPP')=='yes' ? true : false);
             $this->e2Pay_OVO = ($this->get_option('e2Pay_OVO')=='yes' ? true : false);
             $this->e2Pay_NUCash = ($this->get_option('e2Pay_NUCash')=='yes' ? true : false);
             $this->e2Pay_CIMBOctoClicks_IB = ($this->get_option('e2Pay_CIMBOctoClicks_IB')=='yes' ? true : false);
@@ -251,7 +251,7 @@ function wcmolpay_gateway_load() {
                     'default' => 'PRODUCTION',
                     'options' => array(
                         '1'  => __('PRODUCTION', 'wcmolpay' ),
-                        // '2' => __( 'SANDBOX', 'wcmolpay' )
+                        '2' => __( 'SANDBOX', 'wcmolpay' )
                         )
                 ),
                 'channel' => array(
@@ -265,7 +265,7 @@ function wcmolpay_gateway_load() {
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'                
                 ),
-                'e2Pay_LINKAJA' => array(
+                'e2Pay_LINKAJA_APPLINK' => array(
                     'title' => __( 'LINKAJA', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
@@ -277,7 +277,7 @@ function wcmolpay_gateway_load() {
                     'label' => __( ' ', 'wcmolpay' ),
                     'default' => 'no'                
                 ),
-                'e2Pay_SHOPEEPAY' => array(
+                'e2Pay_SHOPEEPAY_JUMPAPP' => array(
                     'title' => __( 'SHOPEEPAY', 'wcmolpay' ),
                     'type' => 'checkbox',
                     'label' => __( ' ', 'wcmolpay' ),
@@ -435,9 +435,9 @@ function wcmolpay_gateway_load() {
                     ."<br/>"
                     ."<br/>"                    
                     .($this->e2Pay_DANA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_DANA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/DANA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->e2Pay_LINKAJA ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_LINKAJA' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/LINKAJA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->e2Pay_LINKAJA_APPLINK ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_LINKAJA_APPLINK' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/LINKAJA.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
                     .($this->e2Pay_CIMB_OCTO_MOBILE ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_CIMB_OCTO_MOBILE' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/CIMBOctoClicks.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
-                    .($this->e2Pay_SHOPEEPAY ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_SHOPEEPAY' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/SHOPEEPAY.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
+                    .($this->e2Pay_SHOPEEPAY_JUMPAPP ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_SHOPEEPAY_JUMPAPP' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/SHOPEEPAY.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
                     .($this->e2Pay_OVO ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_OVO' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/OVO.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
                     .($this->e2Pay_NUCash ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_NUCash' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/NUCash.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
                     .($this->e2Pay_CIMBOctoClicks_IB ? "<button type='button' style='background:none; padding:0px' data-toggle='molpayseamless' data-mpsbill_mobile='".$order->get_billing_phone()."' data-mpsmerchantid='".$this->merchant_id."' data-mpsbill_desc='".$desc."' data-mpsbill_email='".$order->get_billing_email()."' data-mpscountry='".$order->get_billing_country()."' data-mpscurrency='".get_woocommerce_currency()."' data-mpschannel='e2Pay_CIMBOctoClicks_IB' data-mpsamount='".$total."' data-mpsorderid='".$order_number."' data-mpsbill_name='".$order->get_billing_first_name()." ".$order->get_billing_last_name()."' data-mpsvcode='".$vcode."' data-mpsreturnurl='".$mpsreturn."'><img src='".plugins_url( 'images/CIMBOctoClicks.png', __FILE__ )."' width='100px' height='50px' style='border: 1px solid; border-radius: 5px; border-color: #DDD;'/></button>" : '')
