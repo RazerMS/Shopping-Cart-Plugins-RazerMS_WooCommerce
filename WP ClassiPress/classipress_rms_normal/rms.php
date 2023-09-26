@@ -1,10 +1,10 @@
 <?php
 /*
-	Plugin Name: Classipress MOLPay
-	Plugin URI: http://www.github.com/MOLPay
-	Description: MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more.
- 	Author: MOLPay Tech Team
-	Author URI: http://www.molpay.com/
+	Plugin Name: Classipress RMS
+	Plugin URI: http://www.github.com/RMS
+	Description: RMS | The leading payment gateway in South East Asia Grow your business with RMS payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more.
+ 	Author: RMS Tech Team
+	Author URI: http://www.RMS.com/
 	Version: 1.0
 */
 
@@ -31,22 +31,22 @@
  *
  */
 
-/***** MOLPAY ADMIN SETTING *********/
-function molpay_add_gateway_values(){
+/***** RMS ADMIN SETTING *********/
+function rms_add_gateway_values(){
 	global $app_abbr, $action_gateway_values;
 
 	$mol_gateway_values = array(
-		array('type' => 'tab', 'tabname' => __('MOLPay', MOL_TD),
+		array('type' => 'tab', 'tabname' => __('rms', MOL_TD),
 			'id' => ''),
 
-			array('name' => __('<b>MOLPay Online Payment</b>', MOL_TD),
+			array('name' => __('<b>rms Online Payment</b>', MOL_TD),
 				'type' => 'title',
 				'id' => ''),
 
-			array('name' => __('Enable MOLPay', MOL_TD),
-				'desc' => sprintf(__("<i>You must have a <a target='_new' href='%s'>MOLPay</a> account setup before using this feature.</i>", MOL_TD), 'http://www.molpay.com/v2/contact/merchant-enquiry'),
-				'tip' => __('Set this to yes if you want to enable MOLPay as a payment option on your site.'),
-				'id' => $app_abbr.'_enable_molpay',
+			array('name' => __('Enable rms', MOL_TD),
+				'desc' => sprintf(__("<i>You must have a <a target='_new' href='%s'>rms</a> account setup before using this feature.</i>", MOL_TD), 'http://www.rms.com/v2/contact/merchant-enquiry'),
+				'tip' => __('Set this to yes if you want to enable rms as a payment option on your site.'),
+				'id' => $app_abbr.'_enable_rms',
 				'css' => 'width:100px;',
 				'std' => '',
 				'js' => '',
@@ -55,9 +55,9 @@ function molpay_add_gateway_values(){
 								'no' => __('No', MOL_TD))),
 
 			array('name' => __('Merchant ID', MOL_TD),
-				'desc' => sprintf(__("<i>Please enter your MOLPay Merchant ID. You can to get this information in: <a target='_new' href='%s'>MOLPay Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/MOLPay/'),
+				'desc' => sprintf(__("<i>Please enter your rms Merchant ID. You can to get this information in: <a target='_new' href='%s'>rms Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/rms/'),
 				'tip'  => '',
-				'id' => $app_abbr.'_molpay_merchant_id',
+				'id' => $app_abbr.'_rms_merchant_id',
 				'css' => 'min-width:250px;',
 				'type' => 'text',
 				'req' => '',
@@ -66,9 +66,9 @@ function molpay_add_gateway_values(){
 				'vis' => ''),
 
 			array('name' => __('Verify Key', MOL_TD),
-				'desc' => sprintf(__("<i>Please enter your MOLPay Verify Key. You can to get this information in: <a target='_new' href='%s'>MOLPay Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/MOLPay/'),
+				'desc' => sprintf(__("<i>Please enter your rms Verify Key. You can to get this information in: <a target='_new' href='%s'>rms Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/rms/'),
 				'tip' => '',
-				'id' => $app_abbr.'_molpay_verify_key',
+				'id' => $app_abbr.'_rms_verify_key',
 				'css' => 'min-width:250px;',
 				'type' => 'text',
 				'req' => '',
@@ -83,7 +83,7 @@ function molpay_add_gateway_values(){
 	$action_gateway_values = array_merge((array)$action_gateway_values,(array)$mol_gateway_values);
 }
 
-add_action( 'cp_action_gateway_values', 'molpay_add_gateway_values' );
+add_action( 'cp_action_gateway_values', 'rms_add_gateway_values' );
 
 
 /**
@@ -93,14 +93,14 @@ add_action( 'cp_action_gateway_values', 'molpay_add_gateway_values' );
  *
  */
 
-function molpay_add_gateway_option(){
+function rms_add_gateway_option(){
 	global $app_abbr, $gateway_name;
 
-	if(get_option($app_abbr.'_enable_molpay') == 'yes')
-		echo '<option value="molpay">'.__('MOLPay (Visa/MasterCard,M2U,FPX,etc.)', MOL_TD).'</option>';
+	if(get_option($app_abbr.'_enable_rms') == 'yes')
+		echo '<option value="rms">'.__('rms (Visa/MasterCard,M2U,FPX,etc.)', MOL_TD).'</option>';
 }
 
-add_action('cp_action_payment_method','molpay_add_gateway_option');
+add_action('cp_action_payment_method','rms_add_gateway_option');
 
 
 /**
@@ -108,11 +108,11 @@ add_action('cp_action_payment_method','molpay_add_gateway_option');
 * @param array $order_vals contains all the order values
 **/
 
-function gateway_molpay($order_vals){
+function gateway_rms($order_vals){
 	global $wpdb, $gateway_name, $app_abbr, $post_url, $userdata;
 
 	//if gateway wasn't selected then exit
-	if($order_vals['cp_payment_method'] != 'molpay')
+	if($order_vals['cp_payment_method'] != 'rms')
 		return;
 
 	$query = "SELECT * FROM $wpdb->users WHERE ID = ".$order_vals['user_id'];
@@ -124,23 +124,23 @@ function gateway_molpay($order_vals){
 	$pack = $_POST['pack'];
 
 	//get the merchant id
-	$merchant_id = get_option($app_abbr.'_molpay_merchant_id');
+	$merchant_id = get_option($app_abbr.'_rms_merchant_id');
 
 	//get the verify key
-	$verify_key = get_option($app_abbr.'_molpay_verify_key');
+	$verify_key = get_option($app_abbr.'_rms_verify_key');
 	
 	$amount = $order_vals['item_amount'];
 	$orderid = urlencode($order_vals['oid'].'U'.$order_vals['user_id'].'P'.$pack);
 
 	$vcode = md5($amount.$merchant_id.$orderid.$verify_key);
 
-	$molpay_url = "https://www.onlinepayment.com.my/MOLPay/pay/".$merchant_id.'/';
+	$rms_url = "https://www.onlinepayment.com.my/rms/pay/".$merchant_id.'/';
 
-	$return_url = add_query_arg(array('oid' => $order_vals['oid'], 'molpay' => $order_vals['oid'].'_'.$userdata->ID), CP_DASHBOARD_URL);
+	$return_url = add_query_arg(array('oid' => $order_vals['oid'], 'rms' => $order_vals['oid'].'_'.$userdata->ID), CP_DASHBOARD_URL);
 	$return_url = wp_nonce_url($return_url,$order_vals['oid']);
 
 	?>
-	<form name='paymentform' method='post' action='<?php echo $molpay_url; ?>' accept-charset="utf-8">
+	<form name='paymentform' method='post' action='<?php echo $rms_url; ?>' accept-charset="utf-8">
 		<input type="hidden" name="bill_name" value="<?php echo $username; ?>" />
 		<input type="hidden" name="bill_email" value="<?php echo $usermail; ?>" />
 		<input type="hidden" name="bill_desc" value="Membership Purchase" />
@@ -158,16 +158,16 @@ function gateway_molpay($order_vals){
 <?php
 }
 
-add_action( 'cp_action_gateway', 'gateway_molpay', 10, 1 );
+add_action( 'cp_action_gateway', 'gateway_rms', 10, 1 );
 
 
 /**
  * Payment processing for ad dashboard so ad owners can pay for unpaid ads
 **/
-function dashboard_button_molpay($the_id,$type=''){
+function dashboard_button_rms($the_id,$type=''){
 	global $wpdb, $app_abbr, $userdata;
 
-	if(get_option($app_abbr.'_enable_molpay') != "yes")
+	if(get_option($app_abbr.'_enable_rms') != "yes")
 		return;
 	get_currentuserinfo();
 
@@ -188,7 +188,7 @@ function dashboard_button_molpay($the_id,$type=''){
 		$item_number = get_post_meta($the_id, 'cp_sys_ad_conf_id', true); 
 		$amount = get_post_meta($the_id, 'cp_sys_total_ad_cost', true);
 		$orderid = get_post_meta( $the_id, 'cp_sys_ad_conf_id', true );
-		$return_url = add_query_arg( array( 'oid' => $orderid, 'molpay' => $orderid .'_'. $userdata->ID ), CP_DASHBOARD_URL );
+		$return_url = add_query_arg( array( 'oid' => $orderid, 'rms' => $orderid .'_'. $userdata->ID ), CP_DASHBOARD_URL );
 		$return_url = wp_nonce_url( $return_url, $orderid );
 	}
 
@@ -196,19 +196,19 @@ function dashboard_button_molpay($the_id,$type=''){
 	$usermail = $userdata->user_email;
 
 	//get the merchant id
-	$merchant_id = get_option($app_abbr.'_molpay_merchant_id');
+	$merchant_id = get_option($app_abbr.'_rms_merchant_id');
 
 	//get the verify key
-	$verify_key = get_option($app_abbr.'_molpay_verify_key');
+	$verify_key = get_option($app_abbr.'_rms_verify_key');
 	$vcode = md5($amount.$merchant_id.$orderid.$verify_key);
 
-	$molpay_url = "https://www.onlinepayment.com.my/MOLPay/pay/".$merchant_id.'/';
+	$rms_url = "https://www.onlinepayment.com.my/rms/pay/".$merchant_id.'/';
 
-	$return_url = add_query_arg(array('oid' => $orderid, 'molpay' => $orderid.'_'.$userdata->ID), CP_DASHBOARD_URL);
+	$return_url = add_query_arg(array('oid' => $orderid, 'rms' => $orderid.'_'.$userdata->ID), CP_DASHBOARD_URL);
 	$return_url = wp_nonce_url($return_url,$orderid);
 	
 	?>
-	<form name='paymentform' method='post' action='<?php echo $molpay_url; ?>' accept-charset="utf-8">
+	<form name='paymentform' method='post' action='<?php echo $rms_url; ?>' accept-charset="utf-8">
 		<input type="hidden" name="bill_name" value="<?php echo $username; ?>" />
 		<input type="hidden" name="bill_email" value="<?php echo $usermail; ?>" />
 		<input type="hidden" name="bill_desc" value="Purchase Ads" />
@@ -222,7 +222,7 @@ function dashboard_button_molpay($the_id,$type=''){
 
 		<center>
 			<button style="cursor:pointer;">
-				<img src="<?php echo plugins_url('/images/molpay.png', __FILE__); ?>" style='width:50px;height:15px;' />
+				<img src="<?php echo plugins_url('/images/rms.png', __FILE__); ?>" style='width:50px;height:15px;' />
 			</button>
 		<!-- <input type="submit" class="btn_orange" value="<?php _e('Continue &rsaquo;&rsaquo;', MOL_TD); ?>" /> -->
 		</center>
@@ -231,16 +231,16 @@ function dashboard_button_molpay($the_id,$type=''){
 <?php
 }
 
-add_action('cp_action_payment_button','dashboard_button_molpay',10,1);
+add_action('cp_action_payment_button','dashboard_button_rms',10,1);
 
 /**
 * Process Ads Payment
 **/
 
-function molpay_to_merchant(){
+function rms_to_merchant(){
 	global $wpdb, $app_abbr;
 
-	$vkey = get_option($app_abbr.'_molpay_verify_key');
+	$vkey = get_option($app_abbr.'_rms_verify_key');
 
 	$_POST['treq'] = "1";
 
@@ -268,7 +268,7 @@ function molpay_to_merchant(){
 		$postData[] = $k."=".$v;
 	}
 	$postdata = implode("&",$postData);
-	$url = "https://www.onlinepayment.com.my/MOLPAY/API/chkstat/returnipn.php";
+	$url = "https://www.onlinepayment.com.my/rms/API/chkstat/returnipn.php";
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
@@ -284,12 +284,12 @@ function molpay_to_merchant(){
 	$key0 = md5($tranID.$multiorder.$status.$domain.$amount.$currency);
 	$key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
 
-	if(isset($_GET['molpay']) && !empty($_GET['_wpnonce'])){
+	if(isset($_GET['rms']) && !empty($_GET['_wpnonce'])){
 		//step functions required to process orders
 		include_once('wp-load.php');
 		include_once(TEMPLATEPATH.'/includes/forms/step-functions.php');
 
-		$pid = explode("_", $_GET['molpay']);
+		$pid = explode("_", $_GET['rms']);
 
 		if(!wp_verify_nonce($_GET['_wpnonce'],$pid[0]))
 			return;
@@ -416,17 +416,17 @@ function molpay_to_merchant(){
 	}
 }
 
-add_action('init', 'molpay_to_merchant');
+add_action('init', 'rms_to_merchant');
 
 /*
- * This part is callback function for MOLPay
+ * This part is callback function for rms
  */
-function molpay_response_callback(){
+function rms_response_callback(){
 	if(isset($_REQUEST['mode'])){
 		if($_REQUEST['mode'] == "callback"){
 			global $wpdb, $app_abbr;
 
-			$vkey = get_option($app_abbr.'_molpay_verify_key');
+			$vkey = get_option($app_abbr.'_rms_verify_key');
 
 			$nbcb = $_POST['nbcb'];
 			$skey = $_POST['skey'];
@@ -456,7 +456,7 @@ function molpay_response_callback(){
 			include_once('wp-load.php');
 			include_once(TEMPLATEPATH.'/includes/forms/step-functions.php');
 
-			// $pid = explode("_", $_GET['molpay']);
+			// $pid = explode("_", $_GET['rms']);
 
 			// if(!wp_verify_nonce($_GET['_wpnonce'],$pid[0]))
 				// return;
@@ -618,5 +618,5 @@ function molpay_response_callback(){
 	}
 }
 
-add_action('init','molpay_response_callback');
+add_action('init','rms_response_callback');
 ?>
