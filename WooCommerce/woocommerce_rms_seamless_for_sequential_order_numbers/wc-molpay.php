@@ -650,7 +650,7 @@ function wcmolpay_gateway_load() {
             }
 
             $postdata = implode("&",$postData);
-            $url = $this->url."MOLPay/API/chkstat/returnipn.php";
+            $url = $this->url."RMS/API/chkstat/returnipn.php";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_POST , 1 );
             curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
@@ -718,7 +718,7 @@ function wcmolpay_gateway_load() {
                 $postData[]= $k."=".$v;
             }
             $postdata = implode("&",$postData);
-            $url = $this->url."MOLPay/API/chkstat/returnipn.php";
+            $url = $this->url."RMS/API/chkstat/returnipn.php";
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_POST , 1 );
             curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
@@ -832,7 +832,7 @@ function wcmolpay_gateway_load() {
          */
         public function inquiry_status($tranID, $amount, $domain) {
             $verify_key = $this->verify_key;
-            $requestUrl = $this->inquiry_url."MOLPay/q_by_tid.php";
+            $requestUrl = $this->inquiry_url."RMS/q_by_tid.php";
             $request_param = array(
                 "amount"    => number_format($amount,2),
                 "txID"      => intval($tranID),

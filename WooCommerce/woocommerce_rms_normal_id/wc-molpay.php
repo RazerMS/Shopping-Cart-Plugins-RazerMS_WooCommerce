@@ -604,7 +604,7 @@ function wcmolpay_gateway_load() {
                     $postData[]= $k."=".$v;
                 }
                 $postdata = implode("&",$postData);
-                $url = $this->url."MOLPay/API/chkstat/returnipn.php";
+                $url = $this->url."RMS/API/chkstat/returnipn.php";
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_POST , 1 );
                 curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
