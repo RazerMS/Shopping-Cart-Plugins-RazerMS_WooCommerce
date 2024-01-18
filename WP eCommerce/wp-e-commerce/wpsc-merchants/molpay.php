@@ -265,16 +265,16 @@ function nzshpcrt_molpay_callback() {
             $bodyContent = "
                 MOLPay Plugin Auto-Sender\n\n
                 Be inform that we have capture for payment : \n
-                Order ID : " . $_REQUEST['orderid'] . "\n
-                Approval code : " . $_REQUEST['appcode'] . "\n
-                Amount : " . $_REQUEST['currency'] . $_REQUEST['amount'] . "\n\n
+                Order ID : " .htmlspecialchars( $_REQUEST['orderid'] ). "\n
+                Approval code : " .htmlspecialchars( $_REQUEST['appcode'] ). "\n
+                Amount : " .htmlspecialchars( $_REQUEST['currency'] . $_REQUEST['amount'] ). "\n\n
                 --------------------------------------------------------------\n
-                Buyer Name : " . $ship_res[0]['value'] . ' ' . $ship_res[1]['value'] . "\n
-                Buyer Phone : " . $ship_res[15]['value'] . "\n
-                Buyer Email : " . $ship_res[7]['value'] . "\n
-                Buyer Address : " . $ship_res[2]['value'] . ', ' . $ship_res[6]['value'] . ', ' . $ship_res[3]['value'] . ', ' . $ship_res[4]['value'] . "\n
-                Shipping Name : " . $ship_res[8]['value'] . ' ' . $ship_res[9]['value'] . "\n
-                Shipping Address : " . $ship_res[10]['value'] . ', ' . $ship_res[14]['value'] . ', ' . $ship_res[11]['value'] . ', ' . $ship_res[12]['value'] . "\n                
+                Buyer Name : " .htmlspecialchars( $ship_res[0]['value'] . ' ' . $ship_res[1]['value'] ). "\n
+                Buyer Phone : " .htmlspecialchars( $ship_res[15]['value'] ). "\n
+                Buyer Email : " .htmlspecialchars( $ship_res[7]['value'] ). "\n
+                Buyer Address : " .htmlspecialchars( $ship_res[2]['value'] ). ', ' .htmlspecialchars( $ship_res[6]['value'] ). ', ' .htmlspecialchars( $ship_res[3]['value'] ). ', ' .htmlspecialchars( $ship_res[4]['value'] ). "\n
+                Shipping Name : " .htmlspecialchars( $ship_res[8]['value'] ). ' ' .htmlspecialchars( $ship_res[9]['value'] ). "\n
+                Shipping Address : " .htmlspecialchars( $ship_res[10]['value'] ). ', ' .htmlspecialchars( $ship_res[14]['value'] ). ', ' .htmlspecialchars( $ship_res[11]['value'] ). ', ' .htmlspecialchars( $ship_res[12]['value'] ). "\n                
             ";
             
             wp_mail( get_option('admin_email'), 'Accepted Payment Notification | MOLPay', $bodyContent);
@@ -376,20 +376,20 @@ function form_molpay() {
     $output = "
             <tr>
               <td>Merchant ID</td>
-              <td><input type='text' size='40' value='".get_option('molpay_merchant_id')."' name='molpay_merchant_id' /></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('molpay_merchant_id'))."' name='molpay_merchant_id' /></td>
             </tr>
 
             <tr>
               <td>Verify Key</td>
-              <td><input type='text' size='40' value='".get_option('molpay_vkey')."' name='molpay_vkey' /></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('molpay_vkey'))."' name='molpay_vkey' /></td>
             </tr>
             <tr>
               <td>Return URL</td>
-              <td><input type='text' size='40' value='".get_option('transact_url')."' name='molpay_return_url' readonly/></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('transact_url'))."' name='molpay_return_url' readonly/></td>
             </tr>
             <tr>
               <td>Callback URL</td>
-              <td><input type='text' size='40' value='".get_option('transact_url')."' name='molpay_callback_url' readonly/></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('transact_url'))."' name='molpay_callback_url' readonly/></td>
             </tr>
 
     ";
