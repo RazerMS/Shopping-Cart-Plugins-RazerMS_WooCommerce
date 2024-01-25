@@ -32,17 +32,18 @@ function gateway_molpay($seperator, $sessionid) {
     $ob_cache = $wp_object_cache->cache;
     $cur = $ob_cache['options']['alloptions'];
     $cur_type = $cur['currency_type'];
-
-    $cur_sql = "SELECT * FROM `".WPSC_TABLE_CURRENCY_LIST."` WHERE `id`= ".$cur_type." LIMIT 1";
-    $cur_res = $wpdb->get_results($cur_sql,ARRAY_A) ;
-    $cur_code = $cur_res[0]['code'];	
-    $cur_code = (strnatcasecmp($cur_code,"myr")=="0")? "rm" : strtolower($cur_code);
-
-    $purchase_log_sql = "SELECT * FROM `".WPSC_TABLE_PURCHASE_LOGS."` WHERE `sessionid`= ".$sessionid." LIMIT 1";
-    $purchase_log = $wpdb->get_results($purchase_log_sql,ARRAY_A);
-
-    $cart_sql = "SELECT * FROM `".WPSC_TABLE_CART_CONTENTS."` WHERE `purchaseid`='".$purchase_log[0]['id']."'"; 
-    $cart = $wpdb->get_results($cart_sql,ARRAY_A) ;
+    
+    $cur_sql = $wpdb->prepare("SELECT * FROM %s WHERE id = %d LIMIT 1", WPSC_TABLE_CURRENCY_LIST, $cur_type);
+    $cur_res = $wpdb->get_results($cur_sql, ARRAY_A);
+    $cur_code = $cur_res[0]['code'];
+    $cur_code = (strnatcasecmp($cur_code, "myr") == 0) ? "rm" : strtolower($cur_code);
+    
+    $purchase_log_sql = $wpdb->prepare("SELECT * FROM %s WHERE sessionid = %s LIMIT 1", WPSC_TABLE_PURCHASE_LOGS, $sessionid);
+    $purchase_log = $wpdb->get_results($purchase_log_sql, ARRAY_A);
+    
+    $cart_sql = $wpdb->prepare("SELECT * FROM %s WHERE purchaseid = %s", WPSC_TABLE_CART_CONTENTS, $purchase_log[0]['id']);
+    $cart = $wpdb->get_results($cart_sql, ARRAY_A);
+ 
         
     $molpay_get_url = get_option('molpay_url');
 
@@ -70,18 +71,24 @@ function gateway_molpay($seperator, $sessionid) {
     }    
  
     //Get user email
-    $email_data = $wpdb->get_results("SELECT `id`,`type` FROM `".WPSC_TABLE_CHECKOUT_FORMS."` WHERE `type` IN ('email') AND `active` = '1'",ARRAY_A);
+   $email_data = $wpdb->get_results($wpdb->prepare("SELECT `id`,`type` FROM `".WPSC_TABLE_CHECKOUT_FORMS."` WHERE `type` IN ('email') AND `active` = %d", 1), ARRAY_A);
     foreach((array)$email_data as $email) {
         $data['email'] = $_POST['collected_data'][$email['id']];
     }
-    if(($_POST['collected_data'][get_option('email_form_field')] != null) && ($data['email'] == null)) {
+    if(($_POST['collected_data'][get_option('email_form_field')]!= null) && ($data['email'] == null)) {
         $data['email'] = $_POST['collected_data'][get_option('email_form_field')];
     }
+    
 	
     //collect item(s) in cart information
-    $prod_sql  = "SELECT * FROM `".WPSC_TABLE_CART_CONTENTS."` WHERE `purchaseid`='".$cart[0]['purchaseid']."'";
-    $prod_res  = $wpdb->get_results($prod_sql,ARRAY_A) ;
+    $purchase_id = $cart[0]['purchaseid'];
+    $prod_sql = $wpdb->prepare(
+        "SELECT * FROM `" . esc_sql(WPSC_TABLE_CART_CONTENTS) . "` WHERE `purchaseid` = %s",
+        $purchase_id
+    );
+    $prod_res = $wpdb->get_results($prod_sql, ARRAY_A);
     $prod_size = sizeof($prod_res);
+    
 
     for ($i=0; $i<$prod_size; $i++) {
         $p_name[] = $prod_res[$i]['name']." x ".$prod_res[$i]['quantity'];
@@ -91,10 +98,14 @@ function gateway_molpay($seperator, $sessionid) {
     	$p_desc = implode("\n",$p_name);
     }
 							
-    $ship_sql  = "SELECT form_id,value FROM `".WPSC_TABLE_SUBMITED_FORM_DATA."` WHERE `log_id`='".$cart[0]['purchaseid']."' ";
-    $ship_res  = $wpdb->get_results($ship_sql,ARRAY_A);
-        
+    $purchase_id = $cart[0]['purchaseid'];
+    $ship_sql = $wpdb->prepare(
+        "SELECT form_id, value FROM `" . esc_sql(WPSC_TABLE_SUBMITED_FORM_DATA) . "` WHERE log_id = %s",
+        $purchase_id
+    );
+    $ship_res = $wpdb->get_results($ship_sql, ARRAY_A);
     $size_ship = sizeof($ship_res);
+    
     
     for($k = 0; $k < $size_ship; $k++) {
         $form_id = $ship_res[$k]['form_id'];
@@ -223,9 +234,17 @@ function nzshpcrt_molpay_callback() {
     $key1 = md5($_REQUEST['paydate'] . get_option('molpay_merchant_id') . $key0 . $_REQUEST['appcode'] . get_option('molpay_vkey'));
     
     if(isset($_REQUEST['skey']) && $_REQUEST['skey'] == $key1) {
-        $data = $wpdb->get_row("SELECT * FROM `".WPSC_TABLE_PURCHASE_LOGS."` WHERE `id` = ".$_REQUEST['orderid']."");
+        $orderId = $_REQUEST['skey'];
+
+        $data = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT * FROM `".WPSC_TABLE_PURCHASE_LOGS."` WHERE `id` = %d",
+                $orderId
+            )
+        );
         
         $ship_res = molpay_inline_classes_object_function::query_data($wpdb, $_REQUEST['orderid']);
+
         
         $_POST['sessionid'] = $sessionid = $data->sessionid;
         $transid = $_REQUEST['tranID'];
@@ -246,16 +265,16 @@ function nzshpcrt_molpay_callback() {
             $bodyContent = "
                 MOLPay Plugin Auto-Sender\n\n
                 Be inform that we have capture for payment : \n
-                Order ID : " . $_REQUEST['orderid'] . "\n
-                Approval code : " . $_REQUEST['appcode'] . "\n
-                Amount : " . $_REQUEST['currency'] . $_REQUEST['amount'] . "\n\n
+                Order ID : " .htmlspecialchars( $_REQUEST['orderid'] ). "\n
+                Approval code : " .htmlspecialchars( $_REQUEST['appcode'] ). "\n
+                Amount : " .htmlspecialchars( $_REQUEST['currency'] . $_REQUEST['amount'] ). "\n\n
                 --------------------------------------------------------------\n
-                Buyer Name : " . $ship_res[0]['value'] . ' ' . $ship_res[1]['value'] . "\n
-                Buyer Phone : " . $ship_res[15]['value'] . "\n
-                Buyer Email : " . $ship_res[7]['value'] . "\n
-                Buyer Address : " . $ship_res[2]['value'] . ', ' . $ship_res[6]['value'] . ', ' . $ship_res[3]['value'] . ', ' . $ship_res[4]['value'] . "\n
-                Shipping Name : " . $ship_res[8]['value'] . ' ' . $ship_res[9]['value'] . "\n
-                Shipping Address : " . $ship_res[10]['value'] . ', ' . $ship_res[14]['value'] . ', ' . $ship_res[11]['value'] . ', ' . $ship_res[12]['value'] . "\n                
+                Buyer Name : " .htmlspecialchars( $ship_res[0]['value'] . ' ' . $ship_res[1]['value'] ). "\n
+                Buyer Phone : " .htmlspecialchars( $ship_res[15]['value'] ). "\n
+                Buyer Email : " .htmlspecialchars( $ship_res[7]['value'] ). "\n
+                Buyer Address : " .htmlspecialchars( $ship_res[2]['value'] ). ', ' .htmlspecialchars( $ship_res[6]['value'] ). ', ' .htmlspecialchars( $ship_res[3]['value'] ). ', ' .htmlspecialchars( $ship_res[4]['value'] ). "\n
+                Shipping Name : " .htmlspecialchars( $ship_res[8]['value'] ). ' ' .htmlspecialchars( $ship_res[9]['value'] ). "\n
+                Shipping Address : " .htmlspecialchars( $ship_res[10]['value'] ). ', ' .htmlspecialchars( $ship_res[14]['value'] ). ', ' .htmlspecialchars( $ship_res[11]['value'] ). ', ' .htmlspecialchars( $ship_res[12]['value'] ). "\n                
             ";
             
             wp_mail( get_option('admin_email'), 'Accepted Payment Notification | MOLPay', $bodyContent);
@@ -326,7 +345,7 @@ function nzshpcrt_molpay_results() {
 function submit_molpay() {  
     if($_POST['molpay_merchant_id'] != null) {
         update_option('molpay_merchant_id', $_POST['molpay_merchant_id']);
-    }
+    }  
 
     if($_POST['molpay_vkey'] != null) {
         update_option('molpay_vkey', $_POST['molpay_vkey']);
@@ -357,20 +376,20 @@ function form_molpay() {
     $output = "
             <tr>
               <td>Merchant ID</td>
-              <td><input type='text' size='40' value='".get_option('molpay_merchant_id')."' name='molpay_merchant_id' /></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('molpay_merchant_id'))."' name='molpay_merchant_id' /></td>
             </tr>
 
             <tr>
               <td>Verify Key</td>
-              <td><input type='text' size='40' value='".get_option('molpay_vkey')."' name='molpay_vkey' /></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('molpay_vkey'))."' name='molpay_vkey' /></td>
             </tr>
             <tr>
               <td>Return URL</td>
-              <td><input type='text' size='40' value='".get_option('transact_url')."' name='molpay_return_url' readonly/></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('transact_url'))."' name='molpay_return_url' readonly/></td>
             </tr>
             <tr>
               <td>Callback URL</td>
-              <td><input type='text' size='40' value='".get_option('transact_url')."' name='molpay_callback_url' readonly/></td>
+              <td><input type='text' size='40' value='".htmlspecialchars(get_option('transact_url'))."' name='molpay_callback_url' readonly/></td>
             </tr>
 
     ";
@@ -390,12 +409,22 @@ class molpay_inline_classes_object_function {
      * 
      * @param object $wpdb
      */
-    static function query_data( $wpdb, $orderId ) {
-        $cart_sql = "SELECT * FROM `".WPSC_TABLE_CART_CONTENTS."` WHERE `purchaseid`='".$orderId."'"; 
-        $cart = $wpdb->get_results($cart_sql, ARRAY_A) ;
-        
-        $ship_sql  = "SELECT form_id,value FROM `".WPSC_TABLE_SUBMITED_FORM_DATA."` WHERE `log_id`='".$cart[0]['purchaseid']."' ";
-        return $wpdb->get_results($ship_sql, ARRAY_A);
+    static function query_data($wpdb, $orderId) {
+        $cart_sql = $wpdb->prepare(
+            "SELECT * FROM `" . esc_sql(WPSC_TABLE_CART_CONTENTS) . "` WHERE `purchaseid` = %s",
+            $orderId
+        );
+        $cart = $wpdb->get_results($cart_sql, ARRAY_A);
+    
+        if (!empty($cart)) {
+            $ship_sql = $wpdb->prepare(
+                "SELECT form_id, value FROM `" . esc_sql(WPSC_TABLE_SUBMITED_FORM_DATA) . "` WHERE `log_id` = %s",
+                $cart[0]['purchaseid']
+            );
+            return $wpdb->get_results($ship_sql, ARRAY_A);
+        }
+    
+        return array();
     }
     
 }
