@@ -101,7 +101,7 @@ function wcmolpay_gateway_load() {
             $this->account_type = $this->settings['account_type'];
             
             // Define hostname based on account_type
-            $this->url = ($this->get_option('account_type')=='1') ? "https://www.onlinepayment.com.my/" : "https://sandbox.merchant.razer.com/" ;
+            $this->url = ($this->get_option('account_type')=='1') ? "https://pay.merchant.razer.com/" : "https://sandbox.merchant.razer.com/" ;
             $this->inquiry_url = ($this->get_option('account_type')=='1') ? "https://api.merchant.razer.com/" : "https://sandbox.merchant.razer.com/" ;
             
             // Actions.
@@ -140,18 +140,36 @@ function wcmolpay_gateway_load() {
                 'fpx_pbb'           => 'FPX PublicBank (PBB Online)',
                 'fpx_abb'           => 'FPX Affin Bank (Affin Online)',
                 'fpx_bimb'          => 'FPX Bank Islam',
-                'molwallet'         => 'MOLWallet',
-                'Point-BCard'       => 'Point-BCard',
+                'fpx_agrobank'      => 'FPX AgroBank',
+                'fpx_abmb'          => 'FPX Alliance Bank',
+                'fpx_bkrm'          => 'FPX Bank Kerjasama Rakyat Malaysia',
+                'fpx_bmmb'          => 'FPX Bank Muamalat',
+                'fpx_bsn'           => 'FPX Bank Simpanan Nasional',
+                'fpx_kfh'           => 'FPX Kuwait Finance House',
+                'fpx_hsbc'          => 'FPX HSBC',
+                'fpx_ocbc'          => 'FPX OCBC Bank',
+                'fpx_scb'           => 'FPX Standard Chartered Bank',
+                'fpx_uob'           => 'FPX United Oversea Bank',
+                'point-bcard'       => 'Point-BCard',
                 'dragonpay'         => 'Dragonpay',
-                'NGANLUONG'         => 'NGANLUONG',
+                'nganluong'         => 'NGANLUONG',
                 'paysbuy'           => 'PaysBuy',
                 'cash-711'          => '7-Eleven (Razer Cash)',
-                'ATMVA'             => 'ATM Transfer via Permata Bank',
+                'atmva'             => 'ATM Transfer via Permata Bank',
                 'enetsD'            => 'eNETS',
                 'singpost'          => 'Cash-SAM',
-                'UPOP'              => 'China Union Pay',
+                'upop'              => 'China Union Pay',
                 'alipay'            => 'Alipay',
-                'WeChatPay'         => 'WeChatPay Cross Border');
+                'wechatpay'         => 'WeChatPay Cross Border',
+                'tng_ewallet'       => 'Touch `n Go eWallet',
+                'boost'             => 'Boost eWallet',
+                'shopeepay'         => 'Shopee Pay',
+                'mb2u_qrpay-push'   => 'Maybank QRPay',
+                'grabpay'           => 'GrabPay eWallet',
+                'rpp_duitnowqr'     => 'DuitNow QR',
+                'paynow'            => 'PayNow QR',
+                'pbb-cybs'          => 'Public Bank (Installment)'
+            );
         }
 
         /**
@@ -305,7 +323,7 @@ function wcmolpay_gateway_load() {
                     ." <input type='checkbox' name='checkbox' value='check' id='agree' /> I have read and agree to the <b> Terms & Conditions, Refund Policy</b> and <b>Privacy Policy</b>."
                     ."<br/>"
                     ."<br/>"
-                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Proceed', 'woothemes') . "' /> "
+                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay Now', 'woothemes') . "' /> "
                     . "<a class='button cancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
                     //. "<script>document.molpay_payment_form.submit();</script>"
                     . "</form>";
@@ -491,7 +509,7 @@ function wcmolpay_gateway_load() {
          */
         public function inquiry_status($tranID, $amount, $domain) {
             $verify_key = $this->verify_key;
-            $requestUrl = $this->inquiry_url."RMS/q_by_tid.php";
+            $requestUrl = $this->inquiry_url."MOLPay/q_by_tid.php";
             $request_param = array(
                 "amount"    => number_format($amount,2),
                 "txID"      => intval($tranID),
@@ -570,7 +588,12 @@ function wcmolpay_gateway_load() {
                 'kuwait-finace' => 'fpx_kfh',
                 'ocbc' => 'fpx_ocbc',
                 'scb' => 'fpx_scb',
-                'uob' => 'fpx_uob'
+                'uob' => 'fpx_uob',
+                'agrobank' => 'fpx_agrobank',
+                'muamalat' => 'fpx_bmmb',
+                'TNG-EWALLET' => 'TNG_EWALLET',
+                'RPP_DuitNowQR' => 'RPP_DuitNowQR',
+                'PBB-CYBS' => 'PBB-CYBS'
             );
 
             if (isset($channel_mappings[$channel])) {
@@ -631,7 +654,7 @@ function wcmolpay_gateway_load() {
                     $postData[]= $k."=".$v;
                 }
                 $postdata = implode("&",$postData);
-                $url = $this->url."RMS/API/chkstat/returnipn.php";
+                $url = $this->url."MOLPay/API/chkstat/returnipn.php";
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_POST , 1 );
                 curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
@@ -664,7 +687,7 @@ function wcmolpay_gateway_load() {
             $appcode = $response['appcode'];
             $paydate = $response['paydate'];
             $skey = $response['skey'];
-            $vkey = $this->verify_key;
+            $vkey = $this->secret_key;
             
             $key0 = md5($tranID.$orderid.$status.$domain.$amount.$currency);
             $key1 = md5($paydate.$domain.$key0.$appcode.$vkey);
