@@ -285,7 +285,7 @@ function wcmolpay_gateway_load() {
          */
         public function generate_form( $order_id ) {
             $order = new WC_Order( $order_id ); 
-            $pay_url = $this->url.'MOLPay/pay/'.$this->merchant_id;
+            $pay_url = $this->url.'RMS/pay/'.$this->merchant_id;
             $total = $order->get_total();
             $order_number = $order->get_order_number();
             $vcode = md5($order->get_total().$this->merchant_id.$order_number.$this->verify_key);
@@ -509,7 +509,7 @@ function wcmolpay_gateway_load() {
          */
         public function inquiry_status($tranID, $amount, $domain) {
             $verify_key = $this->verify_key;
-            $requestUrl = $this->inquiry_url."MOLPay/q_by_tid.php";
+            $requestUrl = $this->inquiry_url."RMS/q_by_tid.php";
             $request_param = array(
                 "amount"    => number_format($amount,2),
                 "txID"      => intval($tranID),
@@ -654,7 +654,7 @@ function wcmolpay_gateway_load() {
                     $postData[]= $k."=".$v;
                 }
                 $postdata = implode("&",$postData);
-                $url = $this->url."MOLPay/API/chkstat/returnipn.php";
+                $url = $this->url."RMS/API/chkstat/returnipn.php";
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_POST , 1 );
                 curl_setopt($ch, CURLOPT_POSTFIELDS , $postdata );
