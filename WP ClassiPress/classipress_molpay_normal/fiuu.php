@@ -1,10 +1,10 @@
 <?php
 /*
-	Plugin Name: Classipress MOLPay
-	Plugin URI: http://www.github.com/MOLPay
-	Description: MOLPay | The leading payment gateway in South East Asia Grow your business with MOLPay payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more.
- 	Author: MOLPay Tech Team
-	Author URI: http://www.molpay.com/
+	Plugin Name: Classipress Fiuu
+	Plugin URI: http://www.github.com/Fiuu
+	Description: Fiuu | The leading payment gateway in South East Asia Grow your business with Fiuu payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more.
+ 	Author: Fiuu Tech Team
+	Author URI: http://www.fiuu.com/
 	Version: 1.0
 */
 
@@ -31,21 +31,21 @@
  *
  */
 
-/***** MOLPAY ADMIN SETTING *********/
+/***** FIUU ADMIN SETTING *********/
 function molpay_add_gateway_values(){
 	global $app_abbr, $action_gateway_values;
 
 	$mol_gateway_values = array(
-		array('type' => 'tab', 'tabname' => __('MOLPay', MOL_TD),
+		array('type' => 'tab', 'tabname' => __('FIUU', MOL_TD),
 			'id' => ''),
 
-			array('name' => __('<b>MOLPay Online Payment</b>', MOL_TD),
+			array('name' => __('<b>Fiuu Online Payment</b>', MOL_TD),
 				'type' => 'title',
 				'id' => ''),
 
-			array('name' => __('Enable MOLPay', MOL_TD),
-				'desc' => sprintf(__("<i>You must have a <a target='_new' href='%s'>MOLPay</a> account setup before using this feature.</i>", MOL_TD), 'http://www.molpay.com/v2/contact/merchant-enquiry'),
-				'tip' => __('Set this to yes if you want to enable MOLPay as a payment option on your site.'),
+			array('name' => __('Enable Fiuu', MOL_TD),
+				'desc' => sprintf(__("<i>You must have a <a target='_new' href='%s'>Fiuu</a> account setup before using this feature.</i>", MOL_TD), 'http://www.fiuu.com/v2/contact/merchant-enquiry'),
+				'tip' => __('Set this to yes if you want to enable Fiuu as a payment option on your site.'),
 				'id' => $app_abbr.'_enable_molpay',
 				'css' => 'width:100px;',
 				'std' => '',
@@ -55,7 +55,7 @@ function molpay_add_gateway_values(){
 								'no' => __('No', MOL_TD))),
 
 			array('name' => __('Merchant ID', MOL_TD),
-				'desc' => sprintf(__("<i>Please enter your MOLPay Merchant ID. You can to get this information in: <a target='_new' href='%s'>MOLPay Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/MOLPay/'),
+				'desc' => sprintf(__("<i>Please enter your Fiuu Merchant ID. You can to get this information in: <a target='_new' href='%s'>Fiuu Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/MOLPay/'),
 				'tip'  => '',
 				'id' => $app_abbr.'_molpay_merchant_id',
 				'css' => 'min-width:250px;',
@@ -66,7 +66,7 @@ function molpay_add_gateway_values(){
 				'vis' => ''),
 
 			array('name' => __('Verify Key', MOL_TD),
-				'desc' => sprintf(__("<i>Please enter your MOLPay Verify Key. You can to get this information in: <a target='_new' href='%s'>MOLPay Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/MOLPay/'),
+				'desc' => sprintf(__("<i>Please enter your Fiuu Verify Key. You can to get this information in: <a target='_new' href='%s'>Fiuu Account</i>", MOL_TD), 'https://www.onlinepayment.com.my/MOLPay/'),
 				'tip' => '',
 				'id' => $app_abbr.'_molpay_verify_key',
 				'css' => 'min-width:250px;',
@@ -97,7 +97,7 @@ function molpay_add_gateway_option(){
 	global $app_abbr, $gateway_name;
 
 	if(get_option($app_abbr.'_enable_molpay') == 'yes')
-		echo '<option value="molpay">'.__('MOLPay (Visa/MasterCard,M2U,FPX,etc.)', MOL_TD).'</option>';
+		echo '<option value="molpay">'.__('Fiuu (Visa/MasterCard,M2U,FPX,etc.)', MOL_TD).'</option>';
 }
 
 add_action('cp_action_payment_method','molpay_add_gateway_option');
@@ -222,7 +222,7 @@ function dashboard_button_molpay($the_id,$type=''){
 
 		<center>
 			<button style="cursor:pointer;">
-				<img src="<?php echo plugins_url('/images/molpay.png', __FILE__); ?>" style='width:50px;height:15px;' />
+				<img src="<?php echo plugins_url('/images/Fiuu_Logo.png', __FILE__); ?>" style='width:50px;height:15px;' />
 			</button>
 		<!-- <input type="submit" class="btn_orange" value="<?php _e('Continue &rsaquo;&rsaquo;', MOL_TD); ?>" /> -->
 		</center>
@@ -419,7 +419,7 @@ function molpay_to_merchant(){
 add_action('init', 'molpay_to_merchant');
 
 /*
- * This part is callback function for MOLPay
+ * This part is callback function for Fiuu
  */
 function molpay_response_callback(){
 	if(isset($_REQUEST['mode'])){

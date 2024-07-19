@@ -1,24 +1,24 @@
 <?php
 /**
-* MOLPay Wordpress e-Commerce Plugin
+* Fiuu Wordpress e-Commerce Plugin
 *
 * @package Payment Method
-* @author MOLPay Technical Team <technical@molpay.com>
+* @author Fiuu Technical Team <technical@fiuu.com>
 * @version 2.1.1
 *
 */
 
 $nzshpcrt_gateways[$num] = array(
-    'name'              => 'MOLPay Malaysia Online Payment Gateway',
-    'display_name'      => 'MOLPay Malaysia Online Payment Gateway',
-    'internalname'      => 'molpay',
-    'function'          => 'gateway_molpay',
-    'form'              => 'form_molpay',
-    'submit_function'   => 'submit_molpay'
+    'name'              => 'Fiuu Malaysia Online Payment Gateway',
+    'display_name'      => 'Fiuu Malaysia Online Payment Gateway',
+    'internalname'      => 'Fiuu',
+    'function'          => 'gateway_Fiuu',
+    'form'              => 'form_Fiuu',
+    'submit_function'   => 'submit_Fiuu'
 );
 
 /**
- * Initialize the order if MOLPay payment method was selected
+ * Initialize the order if Fiuu payment method was selected
  * 
  * @global object $wpdb
  * @global object $wp_object_cache
@@ -26,7 +26,7 @@ $nzshpcrt_gateways[$num] = array(
  * @param int $sessionid
  * @return void
  */
-function gateway_molpay($seperator, $sessionid) {
+function gateway_Fiuu($seperator, $sessionid) {
     global $wpdb, $wp_object_cache;
 
     $ob_cache = $wp_object_cache->cache;
@@ -44,26 +44,26 @@ function gateway_molpay($seperator, $sessionid) {
     $cart_sql = "SELECT * FROM `".WPSC_TABLE_CART_CONTENTS."` WHERE `purchaseid`='".$purchase_log[0]['id']."'"; 
     $cart = $wpdb->get_results($cart_sql,ARRAY_A) ;
         
-    $molpay_get_url = get_option('molpay_url');
+    $Fiuu_get_url = get_option('Fiuu_url');
 
-    $data['merchant_id'] = get_option('molpay_merchant_id');
-    $data['verify_key']  = get_option('molpay_vkey');
+    $data['merchant_id'] = get_option('Fiuu_merchant_id');
+    $data['verify_key']  = get_option('Fiuu_vkey');
     $data['returnurl']   = get_option('transact_url');
     $data['callbackurl'] = get_option('transact_url');
-    $molpay_url = "https://www.onlinepayment.com.my/MOLPay/pay/" . $data['merchant_id'] . "/";  
+    $Fiuu_url = "https://www.onlinepayment.com.my/Fiuu/pay/" . $data['merchant_id'] . "/";  
    
     //User details
-    if($_POST['collected_data'][get_option('molpay_form_first_name')] != '') {   
-        $data['f_name'] = $_POST['collected_data'][get_option('molpay_form_first_name')];
+    if($_POST['collected_data'][get_option('Fiuu_form_first_name')] != '') {   
+        $data['f_name'] = $_POST['collected_data'][get_option('Fiuu_form_first_name')];
     }
-    if($_POST['collected_data'][get_option('molpay_form_last_name')] != "") {   
-        $data['s_name'] = $_POST['collected_data'][get_option('molpay_form_last_name')];
+    if($_POST['collected_data'][get_option('Fiuu_form_last_name')] != "") {   
+        $data['s_name'] = $_POST['collected_data'][get_option('Fiuu_form_last_name')];
     }
-    if($_POST['collected_data'][get_option('molpay_form_address')] != '') {   
-        $data['street'] = str_replace("\n",', ', $_POST['collected_data'][get_option('molpay_form_address')]); 
+    if($_POST['collected_data'][get_option('Fiuu_form_address')] != '') {   
+        $data['street'] = str_replace("\n",', ', $_POST['collected_data'][get_option('Fiuu_form_address')]); 
     }
-    if($_POST['collected_data'][get_option('molpay_form_city')] != '') {
-        $data['city'] = $_POST['collected_data'][get_option('molpay_form_city')]; 
+    if($_POST['collected_data'][get_option('Fiuu_form_city')] != '') {
+        $data['city'] = $_POST['collected_data'][get_option('Fiuu_form_city')]; 
     }
     if(preg_match("/^[a-zA-Z]{2}$/",$_SESSION['selected_country'])) {   
         $data['country'] = $_SESSION['selected_country'];
@@ -175,7 +175,7 @@ function gateway_molpay($seperator, $sessionid) {
     $desc .= $s_name . ' ' . $s_name2;
     $desc .= "\n" . $s_address . "\n" . $s_address2 . "\n" . $s_address3 . "\n" . $s_address4;
 
-    $data['product_price'] = $total_price; //This data cannot be used in MOLPay system
+    $data['product_price'] = $total_price; //This data cannot be used in Fiuu system
     $data['amount'] = $purchase_log[0]['totalprice'];
     $data['orderid'] = $purchase_log[0]['id'];	
     $data['bill_mobile'] = $b_fon;			
@@ -187,8 +187,8 @@ function gateway_molpay($seperator, $sessionid) {
     $data['returnurl'] = $data['returnurl'];		
     $data['vcode'] = md5($data['amount'] . $data['merchant_id'] . $data['orderid'] . $data['verify_key']); //Generate verfication code
 	
-    //Create Form to post to MOLPay Online Payment Gateway
-    $output= "<center><form id='molpay_form' name='molpay_form' method='post' action='$molpay_url'>\n";
+    //Create Form to post to Fiuu Online Payment Gateway
+    $output= "<center><form id='Fiuu_form' name='Fiuu_form' method='post' action='$Fiuu_url'>\n";
 	
     foreach($data as $n => $v) {
         $output .= "<input type='hidden' name='$n' value='$v' />\n";
@@ -196,16 +196,16 @@ function gateway_molpay($seperator, $sessionid) {
 	
     $plugins_url = plugins_url();    
     $output .= "<br><br>";
-    $output .= "<input type='image' src='$plugins_url/wp-e-commerce/images/molpay_logo.gif' name='submit'></form>";
-    $output .= "<br><input type='image' src='$plugins_url/wp-e-commerce/images/connect_molpay.gif' width='44' length='44'>";
-    $output .= "<br><br><font face='arial' size='2'>Please wait for a while.. You'll redirect to MOLPay Online Payment Gateway.</font></center>";
+    $output .= "<input type='image' src='$plugins_url/wp-e-commerce/images/Fiuu_logo.gif' name='submit'></form>";
+    $output .= "<br><input type='image' src='$plugins_url/wp-e-commerce/images/connect_Fiuu.gif' width='44' length='44'>";
+    $output .= "<br><br><font face='arial' size='2'>Please wait for a while.. You'll redirect to Fiuu Online Payment Gateway.</font></center>";
     
     //flush all the form to the browser view
     echo($output);
 
-    if(get_option('molpay_debug') == 0) {
+    if(get_option('Fiuu_debug') == 0) {
         //Auto submit javascript
-        echo "<script language='javascript'type='text/javascript'>setTimeout(\"document.getElementById('molpay_form').submit()\",1500);</script>";
+        echo "<script language='javascript'type='text/javascript'>setTimeout(\"document.getElementById('Fiuu_form').submit()\",1500);</script>";
     }
     exit();
 }
@@ -215,17 +215,17 @@ function gateway_molpay($seperator, $sessionid) {
  * 
  * @global object $wpdb
  */
-function nzshpcrt_molpay_callback() {    
+function nzshpcrt_Fiuu_callback() {    
     global $wpdb;
     
     //Check skey
-    $key0 = md5($_REQUEST['tranID'] . $_REQUEST['orderid'] . $_REQUEST['status'] . get_option('molpay_merchant_id') . $_REQUEST['amount'] . $_REQUEST['currency']);
-    $key1 = md5($_REQUEST['paydate'] . get_option('molpay_merchant_id') . $key0 . $_REQUEST['appcode'] . get_option('molpay_vkey'));
+    $key0 = md5($_REQUEST['tranID'] . $_REQUEST['orderid'] . $_REQUEST['status'] . get_option('Fiuu_merchant_id') . $_REQUEST['amount'] . $_REQUEST['currency']);
+    $key1 = md5($_REQUEST['paydate'] . get_option('Fiuu_merchant_id') . $key0 . $_REQUEST['appcode'] . get_option('Fiuu_vkey'));
     
     if(isset($_REQUEST['skey']) && $_REQUEST['skey'] == $key1) {
         $data = $wpdb->get_row("SELECT * FROM `".WPSC_TABLE_PURCHASE_LOGS."` WHERE `id` = ".$_REQUEST['orderid']."");
         
-        $ship_res = molpay_inline_classes_object_function::query_data($wpdb, $_REQUEST['orderid']);
+        $ship_res = Fiuu_inline_classes_object_function::query_data($wpdb, $_REQUEST['orderid']);
         
         $_POST['sessionid'] = $sessionid = $data->sessionid;
         $transid = $_REQUEST['tranID'];
@@ -244,7 +244,7 @@ function nzshpcrt_molpay_callback() {
             transaction_results($sessionid, false, $transid);
             
             $bodyContent = "
-                MOLPay Plugin Auto-Sender\n\n
+                Fiuu Plugin Auto-Sender\n\n
                 Be inform that we have capture for payment : \n
                 Order ID : " . $_REQUEST['orderid'] . "\n
                 Approval code : " . $_REQUEST['appcode'] . "\n
@@ -258,7 +258,7 @@ function nzshpcrt_molpay_callback() {
                 Shipping Address : " . $ship_res[10]['value'] . ', ' . $ship_res[14]['value'] . ', ' . $ship_res[11]['value'] . ', ' . $ship_res[12]['value'] . "\n                
             ";
             
-            wp_mail( get_option('admin_email'), 'Accepted Payment Notification | MOLPay', $bodyContent);
+            wp_mail( get_option('admin_email'), 'Accepted Payment Notification | Fiuu', $bodyContent);
         }
         else if($retStatus == '11') {
             $data = array(
@@ -276,8 +276,8 @@ function nzshpcrt_molpay_callback() {
     }
     //Callback
     else if (isset($_REQUEST['nbcb'])) {	
-        $key0 = md5($_REQUEST['tranID'].$_REQUEST['orderid'].$_REQUEST['status'].get_option('molpay_merchant_id').$_REQUEST['amount'].$_REQUEST['currency']);
-        $key1 = md5($_REQUEST['paydate'].get_option('molpay_merchant_id').$key0.$_REQUEST['appcode'].get_option('molpay_vkey'));
+        $key0 = md5($_REQUEST['tranID'].$_REQUEST['orderid'].$_REQUEST['status'].get_option('Fiuu_merchant_id').$_REQUEST['amount'].$_REQUEST['currency']);
+        $key1 = md5($_REQUEST['paydate'].get_option('Fiuu_merchant_id').$key0.$_REQUEST['appcode'].get_option('Fiuu_vkey'));
 
         if( $skey != $key1 )
             $status= -1;
@@ -316,74 +316,74 @@ function nzshpcrt_molpay_callback() {
     }
 }
 
-function nzshpcrt_molpay_results() {
+function nzshpcrt_Fiuu_results() {
     if($_POST['orderid'] !='' && $_GET['sessionid'] == '') {
         $_GET['sessionid'] = $_POST['sessionid'];
     }
 }
 
 
-function submit_molpay() {  
-    if($_POST['molpay_merchant_id'] != null) {
-        update_option('molpay_merchant_id', $_POST['molpay_merchant_id']);
+function submit_Fiuu() {  
+    if($_POST['Fiuu_merchant_id'] != null) {
+        update_option('Fiuu_merchant_id', $_POST['Fiuu_merchant_id']);
     }
 
-    if($_POST['molpay_vkey'] != null) {
-        update_option('molpay_vkey', $_POST['molpay_vkey']);
+    if($_POST['Fiuu_vkey'] != null) {
+        update_option('Fiuu_vkey', $_POST['Fiuu_vkey']);
     }
 
-    if($_POST['molpay_url'] != null) {
-        update_option('molpay_url', $_POST['molpay_url']);
+    if($_POST['Fiuu_url'] != null) {
+        update_option('Fiuu_url', $_POST['Fiuu_url']);
     }
 
 
-    if($_POST['molpay_debug'] != null) {
-        update_option('molpay_debug', $_POST['molpay_debug']);
+    if($_POST['Fiuu_debug'] != null) {
+        update_option('Fiuu_debug', $_POST['Fiuu_debug']);
     }
 
-    foreach((array)$_POST['molpay_form'] as $form => $value) {
-        update_option(('molpay_form_'.$form), $value);
+    foreach((array)$_POST['Fiuu_form'] as $form => $value) {
+        update_option(('Fiuu_form_'.$form), $value);
     }
     return true;
 }
 
-function form_molpay() {	
-    $select_currency[get_option('molpay_curcode')] = "selected='true'";
+function form_Fiuu() {	
+    $select_currency[get_option('Fiuu_curcode')] = "selected='true'";
 
-    $molpay_debug = get_option('molpay_debug');
-    $molpay_debug1 = "";
-    $molpay_debug2 = "";
+    $Fiuu_debug = get_option('Fiuu_debug');
+    $Fiuu_debug1 = "";
+    $Fiuu_debug2 = "";
 
     $output = "
             <tr>
               <td>Merchant ID</td>
-              <td><input type='text' size='40' value='".get_option('molpay_merchant_id')."' name='molpay_merchant_id' /></td>
+              <td><input type='text' size='40' value='".get_option('Fiuu_merchant_id')."' name='Fiuu_merchant_id' /></td>
             </tr>
 
             <tr>
               <td>Verify Key</td>
-              <td><input type='text' size='40' value='".get_option('molpay_vkey')."' name='molpay_vkey' /></td>
+              <td><input type='text' size='40' value='".get_option('Fiuu_vkey')."' name='Fiuu_vkey' /></td>
             </tr>
             <tr>
               <td>Return URL</td>
-              <td><input type='text' size='40' value='".get_option('transact_url')."' name='molpay_return_url' readonly/></td>
+              <td><input type='text' size='40' value='".get_option('transact_url')."' name='Fiuu_return_url' readonly/></td>
             </tr>
             <tr>
               <td>Callback URL</td>
-              <td><input type='text' size='40' value='".get_option('transact_url')."' name='molpay_callback_url' readonly/></td>
+              <td><input type='text' size='40' value='".get_option('transact_url')."' name='Fiuu_callback_url' readonly/></td>
             </tr>
 
     ";
     return $output;
 }
-add_action('init', 'nzshpcrt_molpay_callback');
-add_action('init', 'nzshpcrt_molpay_results');
+add_action('init', 'nzshpcrt_Fiuu_callback');
+add_action('init', 'nzshpcrt_Fiuu_results');
 
 /**
- * Add molpay class to prevent name conflict
+ * Add Fiuu class to prevent name conflict
  * 
  */
-class molpay_inline_classes_object_function {
+class Fiuu_inline_classes_object_function {
     
     /**
      * Get the order cart details
