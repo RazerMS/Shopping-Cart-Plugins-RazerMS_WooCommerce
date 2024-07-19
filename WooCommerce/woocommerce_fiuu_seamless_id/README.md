@@ -1,10 +1,8 @@
 # Change log for WooCommerce Razer Merchant Services Seamless Plugin
 
-## v5.3.1 - Sep 7, 2021
+## Company Rebranding - July 19, 2024
 
-**Updates:**
-
-- Minor fix Order ID Plugin 
+- Rebranded to Fiuu 
 
 ## v5.3.0 - May 24, 2021
 

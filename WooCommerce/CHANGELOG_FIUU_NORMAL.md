@@ -1,5 +1,9 @@
 # Change log for WooCommerce Razer Merchant Services Normal Plugin
 
+## Company Rebranding - July 19, 2024
+
+- Rebranded to Fiuu 
+
 ## v3.0.2 - July 14, 2020
 
 **Bug Fix:**

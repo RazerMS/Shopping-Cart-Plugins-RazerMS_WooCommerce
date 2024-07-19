@@ -1,5 +1,9 @@
 # Change log for WooCommerce Razer Merchant Services Seamless Plugin for Sequential Order Numbers Pro
 
+## Company Rebranding - July 19, 2024
+
+- Rebranded to Fiuu 
+
 ## v3.0.1 - Apr 21, 2020
 
 - Release version 3.0.1

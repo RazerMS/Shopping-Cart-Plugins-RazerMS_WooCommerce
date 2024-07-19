@@ -1,22 +1,22 @@
 <?php
 /**
- * Razer Merchant Services WooCommerce Shopping Cart Plugin
+ * Fiuu WooCommerce Shopping Cart Plugin
  * 
- * @author Razer Merchant Services Technical Team <technical-sa@razer.com>
+ * @author Fiuu Technical Team <technical-sa@razer.com>
  * @version 3.0.2
  * @example For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * @example For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  */
 
 /**
- * Plugin Name: WooCommerce Razer Merchant Services Normal
+ * Plugin Name: WooCommerce Fiuu Normal
  * Plugin URI: https://github.com/RazerMS/WordPress_WooCommerce_WP-eCommerce_ClassiPress
- * Description: WooCommerce Razer Merchant Services | The leading payment gateway in South East Asia Grow your business with Razer Merchant Services payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
- * Author: Razer Merchant Services Tech Team
+ * Description: WooCommerce Fiuu | The leading payment gateway in South East Asia Grow your business with Fiuu payment solutions & free features: Physical Payment at 7-Eleven, Seamless Checkout, Tokenization, Loyalty Program and more for WooCommerce
+ * Author: Fiuu Tech Team
  * Author URI: https://merchant.razer.com/
  * Version: 3.0.2
  * License: MIT
- * Text Domain: wcmolpay
+ * Text Domain: wc-fiuu
  * Domain Path: /languages/
  * For callback : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
  * For notification : http://shoppingcarturl/?wc-api=WC_Molpay_Gateway
@@ -29,7 +29,7 @@
  */
 function wcmolpay_woocommerce_fallback_notice() {
     $message = '<div class="error">';
-    $message .= '<p>' . __( 'WooCommerce Razer Merchant Services Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to work!' , 'wcmolpay' ) . '</p>';
+    $message .= '<p>' . __( 'WooCommerce Fiuu Gateway depends on the last version of <a href="http://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a> to work!' , 'wcmolpay' ) . '</p>';
     $message .= '</div>';
     echo $message;
 }
@@ -38,7 +38,7 @@ function wcmolpay_woocommerce_fallback_notice() {
 add_action( 'plugins_loaded', 'wcmolpay_gateway_load', 0 );
 
 /**
- * Load Razer Merchant Services gateway plugin function
+ * Load Fiuu gateway plugin function
  * 
  * @return mixed
  */
@@ -54,7 +54,7 @@ function wcmolpay_gateway_load() {
     add_filter( 'woocommerce_payment_gateways', 'wcmolpay_add_gateway' );
 
     /**
-     * Add Razer Merchant Services gateway to ensure WooCommerce can load it
+     * Add Fiuu gateway to ensure WooCommerce can load it
      * 
      * @param array $methods
      * @return array
@@ -65,13 +65,13 @@ function wcmolpay_gateway_load() {
     }
 
     /**
-     * Define the Razer Merchant Services gateway
+     * Define the Fiuu gateway
      * 
      */
     class WC_Molpay_Gateway extends WC_Payment_Gateway {
 
         /**
-         * Construct the Razer Merchant Services gateway class
+         * Construct the Fiuu gateway class
          * 
          * @global mixed $woocommerce
          */
@@ -79,10 +79,10 @@ function wcmolpay_gateway_load() {
             global $woocommerce;
 
             $this->id = 'molpay';
-            $this->icon = plugins_url( 'images/logo_RazerMerchantServices.png', __FILE__ );
+            $this->icon = plugins_url( 'images/Fiuu_Logo.png', __FILE__ );
             $this->has_fields = false;
-            $this->method_title = __( 'Razer Merchant Services', 'wcmolpay' );
-            $this->method_description = __( 'Proceed payment via Razer Merchant Services Normal Integration Plugin', 'woocommerce' );
+            $this->method_title = __( 'Fiuu', 'wcmolpay' );
+            $this->method_description = __( 'Proceed payment via Fiuu Normal Integration Plugin', 'woocommerce' );
 
             // Load the form fields.
             $this->init_form_fields();
@@ -168,8 +168,8 @@ function wcmolpay_gateway_load() {
          */
         public function admin_options() {
             ?>
-            <h3><?php _e( 'Razer Merchant Services', 'wcmolpay' ); ?></h3>
-            <p><?php _e( 'Razer Merchant Services works by sending the user to Razer Merchant Services to enter their payment information.', 'wcmolpay' ); ?></p>
+            <h3><?php _e( 'Fiuu', 'wcmolpay' ); ?></h3>
+            <p><?php _e( 'Fiuu works by sending the user to Fiuu to enter their payment information.', 'wcmolpay' ); ?></p>
             <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
             </table><!--/.form-table-->
@@ -185,7 +185,7 @@ function wcmolpay_gateway_load() {
                 'enabled' => array(
                     'title' => __( 'Enable/Disable', 'wcmolpay' ),
                     'type' => 'checkbox',
-                    'label' => __( 'Enable Razer Merchant Services', 'wcmolpay' ),
+                    'label' => __( 'Enable Fiuu', 'wcmolpay' ),
                     'default' => 'yes'
                 ),
                 'ordering_plugin' => array(
@@ -205,7 +205,7 @@ function wcmolpay_gateway_load() {
                     'title' => __( 'Title', 'wcmolpay' ),
                     'type' => 'text',
                     'description' => __( 'This controls the title which the user sees during checkout.', 'wcmolpay' ),
-                    'default' => __( 'Razer Merchant Services', 'wcmolpay' ),
+                    'default' => __( 'Fiuu', 'wcmolpay' ),
                     'desc_tip' => true,
                 ),
                 'payment_title' => array(
@@ -220,25 +220,25 @@ function wcmolpay_gateway_load() {
                     'title' => __( 'Description', 'wcmolpay' ),
                     'type' => 'textarea',
                     'description' => __( 'This controls the description which the user sees during checkout.', 'wcmolpay' ),
-                    'default' => __( 'Pay with Razer Merchant Services', 'wcmolpay' ),
+                    'default' => __( 'Pay with Fiuu', 'wcmolpay' ),
                     'desc_tip' => true,
                 ),
                 'merchant_id' => array(
                     'title' => __( 'Merchant ID', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your Razer Merchant Services Merchant ID.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sRazer Merchant Services Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your Fiuu Merchant ID.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sFiuu Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'verify_key' => array(
                     'title' => __( 'Verify Key', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your Razer Merchant Services Verify Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sRazer Merchant Services Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your Fiuu Verify Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sFiuu Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'secret_key' => array(
                     'title' => __( 'Secret Key', 'wcmolpay' ),
                     'type' => 'text',
-                    'description' => __( 'Please enter your Razer Merchant Services Secret Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sRazer Merchant Services Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
+                    'description' => __( 'Please enter your Fiuu Secret Key.', 'wcmolpay' ) . ' ' . sprintf( __( 'You can to get this information in: %sFiuu Account%s.', 'wcmolpay' ), '<a href="https://portal.merchant.razer.com/" target="_blank">', '</a>' ),
                     'default' => ''
                 ),
                 'account_type' => array(
@@ -301,7 +301,7 @@ function wcmolpay_gateway_load() {
                     ." <input type='checkbox' name='checkbox' value='check' id='agree' /> I have read and agree to the <b> Terms & Conditions, Refund Policy</b> and <b>Privacy Policy</b>."
                     ."<br/>"
                     ."<br/>"
-                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via Razer Merchant Services', 'woothemes') . "' /> "
+                    . "<input type='submit' class='button-alt' id='submit_molpay_payment_form' value='" . __('Pay via Fiuu', 'woothemes') . "' /> "
                     . "<a class='button cancel' href='" . $order->get_cancel_order_url() . "'>".__('Cancel order &amp; restore cart', 'woothemes')."</a>"
                     //. "<script>document.molpay_payment_form.submit();</script>"
                     . "</form>";
@@ -343,7 +343,7 @@ function wcmolpay_gateway_load() {
         }
 
         /**
-         * Check for Razer Merchant Services Response
+         * Check for Fiuu Response
          *
          * @access public
          * @return void
@@ -358,7 +358,7 @@ function wcmolpay_gateway_load() {
             } else if ( $_POST['nbcb']=='2' ) {
                 do_action ( "valid_molpay_request_notification", $_POST );
             } else {
-                wp_die( "Razer Merchant Services Request Failure" );
+                wp_die( "Fiuu Request Failure" );
             }
         }
         
@@ -439,7 +439,7 @@ function wcmolpay_gateway_load() {
          */
         public function merchant_id_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Merchant ID in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Merchant ID in Fiuu. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -450,7 +450,7 @@ function wcmolpay_gateway_load() {
          */
         public function verify_key_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Verify Key in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Verify Key in Fiuu. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -461,7 +461,7 @@ function wcmolpay_gateway_load() {
          */
         public function secret_key_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Secret Key in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> You should fill in your Secret Key in Fiuu. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -472,7 +472,7 @@ function wcmolpay_gateway_load() {
          */
         public function account_type_missing_message() {
             $message = '<div class="error">';
-            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> Select account type in Razer Merchant Services. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
+            $message .= '<p>' . sprintf( __( '<strong>Gateway Disabled</strong> Select account type in Fiuu. %sClick here to configure!%s' , 'wcmolpay' ), '<a href="' . get_admin_url() . 'admin.php?page=wc-settings&tab=checkout&section=wc_molpay_gateway">', '</a>' ) . '</p>';
             $message .= '</div>';
             echo $message;
         }
@@ -520,7 +520,7 @@ function wcmolpay_gateway_load() {
         }
 
         /**
-         * Update Cart based on Razer Merchant Services status
+         * Update Cart based on Fiuu status
          * 
          * @global mixed $woocommerce
          * @param int $order_id
@@ -552,11 +552,11 @@ function wcmolpay_gateway_load() {
 
             $getStatus = $order->get_status();
             if(!in_array($getStatus,array('processing','completed'))) {
-                $order->add_order_note('Razer Merchant Services Payment Status: '.$M_status.'<br>Transaction ID: ' . $tranID . $referer);
+                $order->add_order_note('Fiuu Payment Status: '.$M_status.'<br>Transaction ID: ' . $tranID . $referer);
                 if ($MOLPay_status == "00") {
                     $order->payment_complete();
                 } else {
-                    $order->update_status($W_status, sprintf(__('Payment %s via Razer Merchant Services.', 'woocommerce'), $tranID ) );
+                    $order->update_status($W_status, sprintf(__('Payment %s via Fiuu.', 'woocommerce'), $tranID ) );
                 }
                 if ($this->payment_title == 'yes') {
                     $paytitle = $this->payment_titles[strtolower($channel)];
